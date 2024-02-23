@@ -7,9 +7,9 @@ const callApi = async (url: string, params?: APIMethod) => {
     method: params?.method || 'get',
   }
   if (betterParams?.method === 'get') {
-    return await (await fetch(`http://${SERVER_URL}${url}`, betterParams)).json();
+    return await (await fetch(`${SERVER_URL}${url}`, betterParams)).json();
   } else if (betterParams?.method === 'delete') {
-    return await (await fetch(`http://${SERVER_URL}${url}`, betterParams)).json();
+    return await (await fetch(`${SERVER_URL}${url}`, betterParams)).json();
   }
 };
 
