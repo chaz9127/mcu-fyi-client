@@ -1,0 +1,133 @@
+.navbar-container {
+  .navbar {
+    display: flex;
+    padding: 10px 35px;
+    align-items: center;
+    background-color: #202020;
+    color: #fff;
+
+    .fa-magnifying-glass {
+      margin-right: 16px;
+    }
+
+    .fa-bars {
+      font-size: 24px;
+      margin-right: 32px;
+      cursor: pointer;
+    }
+
+    .donate {
+      width: 100%;
+      .donate-buttom-img {
+        float: right;
+        display: inline-block;
+        cursor: pointer;
+      }
+    }
+
+    .navbar-mobile {
+      display: none;
+    }
+  }
+
+  .logo {
+    font-size: 24px;
+    margin-right: 32px;
+    font-family: 'Avengeance', sans-serif;
+    position: relative;
+    top: 5px;
+    cursor: pointer;
+
+    span {
+      position: relative;
+      text-decoration: none;
+      z-index: 1;
+      &:visited {
+        color: inherit;
+      }
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      display: block;
+      width: calc(100% + 30px);
+      margin: 0 auto;
+      height: 36px;
+      background-color: #F0131E;
+      transform: skew(-25deg);
+      z-index: 0;
+      top: -10px;
+      left: -15px;
+    }
+  }
+
+  .nav-menu {
+    background-color: #202020;
+    margin-left: 32px;
+    max-width: 256px;
+    position: absolute;
+    top: 54px;
+    z-index: 2;
+
+    ul {
+      li {
+        padding: 16px 24px;
+        cursor: pointer;
+
+        .logo {
+          margin-left: 24px;
+        }
+
+        .nav-menu-icon {
+          margin-right: 8px;
+          color: #F0131E;
+        }
+
+        &:hover {
+          background-color: #363636;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .tile-button-container {
+    flex-direction: column;
+  }
+  .featured-buttons {
+    max-width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .navbar-container {
+    .navbar-desktop {
+      display: none;
+    }
+    .navbar-mobile {
+      display: flex;
+    }
+  }
+}
+
+@media (min-width: 769px) {
+  .navbar-container {
+    .navbar-desktop {
+      display: flex;
+    }
+    .logo-item {
+      display: none;
+    }
+    .navbar-mobile {
+      display: none;
+      .logo-item {
+        display: inline-block;
+      }
+    }
+  }
+}
+
+.react-tooltip {
+  z-index: 99;
+}

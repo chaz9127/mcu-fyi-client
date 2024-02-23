@@ -1,0 +1,33 @@
+.react-horizontal-scrolling-menu--scroll-container {
+  overflow: hidden;
+}
+
+.react-horizontal-scrolling-menu--arrow-left {
+  font-size: 36px;
+  position: absolute;
+  z-index: 3;
+  background-color: rgba(0,0,0,0.3);
+  color: rgba(255,255,255,0.7);
+  height: calc(100% - 53px);
+}
+
+.react-horizontal-scrolling-menu--arrow-right {
+  font-size: 36px;
+  position: absolute;
+  z-index: 3;
+  background-color: rgba(0,0,0,0.3);
+  color: rgba(255,255,255,0.7);
+  height: calc(100% - 53px);
+  right: 0;
+}
+
+.react-horizontal-scrolling-menu--inner-wrapper {
+  position: relative;
+}
+
+.carousel-arrow {
+  display: flex;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: center;
+}
