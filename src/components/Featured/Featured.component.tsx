@@ -13,7 +13,7 @@ export const Featured = () => {
           </div>
           <div className="tile-button-container">
             <Button
-              url={`${import.meta.env.VITE_CLIENT_URL}media/${featuredData.featured.showTitle}`}
+              url={`${import.meta.env.VITE_CLIENT_URL}/media/${featuredData.featured.showTitle}`}
               text="Get Info"
               iconClass="fa-solid fa-info"
               tertiary
