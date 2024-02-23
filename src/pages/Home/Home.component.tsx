@@ -40,7 +40,7 @@ export const Home = () => {
     <div className="App">
       <Featured />
       <div className="app-content">
-        {Array(phases.length).fill(0).map((idx: number) => {
+        {Array(phases.length).fill(0).map((item: Phase, idx: number) => {
           const mediaForPhase: Media[] = phases[idx];
           const phase: Phase = {
             name: `Phase ${idx+1}`,
