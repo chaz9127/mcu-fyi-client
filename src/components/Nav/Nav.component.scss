@@ -93,14 +93,6 @@
 }
 
 @media (max-width: 768px) {
-  .tile-button-container {
-    flex-direction: column;
-  }
-  .featured-buttons {
-    max-width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-  }
   .navbar-container {
     .navbar-desktop {
       display: none;
