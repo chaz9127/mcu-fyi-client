@@ -4,6 +4,7 @@ import './PhaseRow.component.scss';
 import "react-horizontal-scrolling-menu/dist/styles.css";
 import "../Carousel/styles.scss";
 import { LeftArrow, RightArrow } from "../Carousel/arrows";
+import { Link } from "react-router-dom";
 
 type PhaseRowProps = {
   phase: Phase
@@ -22,10 +23,12 @@ export const PhaseRow = (props: PhaseRowProps) => {
           >
             {media.map((media: Media) => {
               return (
-                <a key={media._id} href={`/media/${media.name}`} className="phase-result">
-                  <img alt={`${media.name} poster`} className="phase-result-poster" src={media.poster} />
-                  <span className="phase-result-title" >{media.name}</span>
-                </a>
+                <div className="phase-result">
+                  <Link to={`/media/${media.name}`}>
+                    <img alt={`${media.name} poster`} className="phase-result-poster" src={media.poster} />
+                    <span className="phase-result-title" >{media.name}</span>
+                  </Link>
+                </div>
               )
             })}
           </ScrollMenu>
