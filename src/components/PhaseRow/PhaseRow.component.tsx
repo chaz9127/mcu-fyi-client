@@ -21,9 +21,9 @@ export const PhaseRow = (props: PhaseRowProps) => {
             LeftArrow={LeftArrow}
             RightArrow={RightArrow}
           >
-            {media.map((media: Media) => {
+            {media.map((media: Media, idx: number) => {
               return (
-                <div className="phase-result">
+                <div key={idx} className="phase-result">
                   <Link to={`/media/${media.name}`}>
                     <img alt={`${media.name} poster`} className="phase-result-poster" src={media.poster} />
                     <span className="phase-result-title" >{media.name}</span>

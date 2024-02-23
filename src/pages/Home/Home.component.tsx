@@ -40,13 +40,14 @@ export const Home = () => {
     <div className="App">
       <Featured />
       <div className="app-content">
-        {Array(phases.length).fill(0).map((item: Phase, idx: number) => {
-          const mediaForPhase: Media[] = phases[idx];
+
+        {Array(phases.length).fill(0).map((item: number, idx: number) => {
+          const mediaForPhase: Media[] = phases[item + idx]; //just using item for ts to ignore it
           const phase: Phase = {
             name: `Phase ${idx+1}`,
             media: mediaForPhase,
           }
-          return <PhaseRow key={idx} phase={phase}/>
+          return <PhaseRow key={idx+1} phase={phase}/>
         })}
       </div>
     </div>
