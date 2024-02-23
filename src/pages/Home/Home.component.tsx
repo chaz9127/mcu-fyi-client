@@ -18,7 +18,7 @@ export const Home = () => {
   
     const getPhases = async () => {
       const allMedia: Media[] = await getMedia();
-      let phases: Array<Array<Media>> = [];
+      const phases: Array<Array<Media>> = [];
       allMedia.forEach(med => {
         const medPhase = med.phase-1;
         const currentPhase = phases[medPhase];
@@ -40,7 +40,7 @@ export const Home = () => {
     <div className="App">
       <Featured />
       <div className="app-content">
-        {Array(phases.length).fill(0).map((phaseNum: any, idx: number) => {
+        {Array(phases.length).fill(0).map((idx: number) => {
           const mediaForPhase: Media[] = phases[idx];
           const phase: Phase = {
             name: `Phase ${idx+1}`,

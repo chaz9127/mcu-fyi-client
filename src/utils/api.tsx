@@ -1,4 +1,4 @@
-import { SERVER_URL } from '../constants/server';
+import { SERVER_URL } from '../constants/server.js';
 import { APIMethod } from '../types';
 
 const callApi = async (url: string, params?: APIMethod) => {
