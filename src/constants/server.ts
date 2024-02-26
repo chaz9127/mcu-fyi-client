@@ -1,5 +1,5 @@
 const SERVER_PORT = (() => {
-  switch(import.meta.env.NODE_ENV) {
+  switch(import.meta.env.VITE_NODE_ENV) {
     case 'development':
       return ':3001';  
     default:
@@ -10,7 +10,7 @@ const SERVER_PORT = (() => {
 const domain = import.meta.env.VITE_SERVER_URL || 'http://localhost';
 
 const SERVER_URL = (() => {
-  switch(import.meta.env.NODE_ENV) {
+  switch(import.meta.env.VITE_NODE_ENV) {
     case 'development':
       return `${domain}${SERVER_PORT}`;  
     default:

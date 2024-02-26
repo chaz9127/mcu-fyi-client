@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Avengeance';
-  src: local('Avengeance'), url(../public/fonts/avengers-webfont/AvengeanceHeroicAvengerBold-MM2J.woff) format('woff');
+  src: local('Avengeance'), url(/fonts/avengers-webfont/AvengeanceHeroicAvengerBold-MM2J.woff) format('woff');
   /* other formats include: 'woff2', 'truetype, 'opentype',
                             'embedded-opentype', and 'svg' */
 }
