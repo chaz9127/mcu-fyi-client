@@ -1,6 +1,7 @@
 export type Media = {
   _id: string,
   name: string,
+  slug?: string, // should not be optional
   poster: string,
   phase: number,
   releaseDate: number,
