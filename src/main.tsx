@@ -19,7 +19,7 @@ const router = createBrowserRouter([
     // create error page
   },
   {
-    path: "/media/:title",
+    path: "/media/:slug",
     element: <MediaInfo />,
     // create error page
   },

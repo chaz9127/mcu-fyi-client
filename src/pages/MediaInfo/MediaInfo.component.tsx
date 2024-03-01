@@ -9,18 +9,18 @@ import { PhaseRow } from '../../components/PhaseRow/PhaseRow.component';
 import { Button } from '../../components/Button/Button.component';
 
 export const MediaInfo = () => {
-  const { title } = useParams();
+  const { slug } = useParams();
   const [media, setMedia] = useState<Media | null>(null);
   const [relatedMedia, setRelatedMedia] = useState<Media[]>([]);
 
   useLayoutEffect(() => {
     const mediaItem = async () => {
-      const data =( await callApi(`/media/${title}`))[0];
+      const data =( await callApi(`/media/${slug}`))[0];
       setMedia(data);
     }
 
     const mediaRelated = async () => {
-      const data =( await callApi(`/media/related/${title}`));
+      const data =( await callApi(`/media/related/${slug}`));
       setRelatedMedia(data);
     }
 
@@ -73,7 +73,7 @@ export const MediaInfo = () => {
               <span className="media-info-block-title">Precursors</span>
             </strong>
             {relatedMedia.length > 0 && (
-              <PhaseRow phase={{name: '', media: relatedMedia}} />
+              <PhaseRow phase={{name: 'Precursor', media: relatedMedia}} />
             )}
           </div>
         )}
