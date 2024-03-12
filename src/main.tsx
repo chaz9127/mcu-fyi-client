@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { Home } from './pages/Home/Home.component';
-import { Nav } from './components/Nav/Nav.component';
+import { Feedback } from './pages/Feedback/Feedback.component';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -23,6 +23,11 @@ const router = createBrowserRouter([
     element: <MediaInfo />,
     // create error page
   },
+  {
+    path: "/feedback",
+    element: <Feedback />,
+    // create error page
+  },
 ]);
 
 
@@ -31,7 +36,6 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Nav />
     <RouterProvider router={router} />
   </React.StrictMode>
 );

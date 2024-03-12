@@ -1,0 +1,67 @@
+@import '../../styles/colors.scss';
+
+.feedback-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 60px);
+    .feedback-form {
+        width: 100%;
+        max-width: 440px;
+        color: white;
+        padding: 0 32px;
+        position: relative;
+        top: -80px;
+
+        .feedback-page-title {
+            margin-bottom: 48px;
+        }
+
+        .feedback-form-input-container {
+            position: relative;
+            margin: 0 0 24px 0;
+
+            .feedback-form-label {
+                position: absolute;
+                top: -12px;
+                left: 12px;
+                background-color: $primaryBackground;
+                padding: 0 4px;
+                color: grey;
+            }
+    
+            .feedback-form-input {
+                background: transparent;
+                border: 1px solid grey;
+                border-radius: 4px;
+                font-size: 16px;
+                height: 64px;
+                line-height: 32px;
+                font-weight: bold;
+                color: white;
+                padding: 16px 12px;
+                width: 100%;
+                box-sizing: border-box;
+
+                &[name="feedback-message"] {
+                    height: 128px;
+                }
+            }
+
+            .feedback-form-rating {
+                padding: 24px 16px 16px;
+                border: 1px solid grey;
+                border-radius: 4px;
+                display: inline-block;
+
+                .feedback-star {
+                    font-size: 24px;
+                    display: inline-block;
+                    margin-right: 8px;
+                    cursor: pointer;
+                }
+            }
+        }
+        
+    }
+}

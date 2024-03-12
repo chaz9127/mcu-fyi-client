@@ -4,6 +4,7 @@ import { Media } from '../../types';
 import { callApi } from '../../utils/api';
 import { Link } from "react-router-dom";
 import './Home.scss';
+import { Nav } from '../../components/Nav/Nav.component';
 
 export const Home = () => {
   // const [phases, setPhases] = useState<Array<Array<Media>>>([]);
@@ -20,28 +21,31 @@ export const Home = () => {
   }, [])
 
   return (
-    <div className="app-container">
-      <Featured />
-      <div className="app-content">
-        {mediaCollection.map((media: Media, idx: number) => {
-            return (
-              <>
-                <div title={media.name} key={idx} className="media">
-                  <Link to={`/media/${media.slug}`}>
-                    <img alt={`${media.name} poster`} className="media-poster" src={media.poster} />
-                    <span className="media-title">{media.name}</span>
-                    <div className="media-metadata">
-                      <span className="media-type">{media.type || 'Movie'}</span>
-                      <span className="media-season">{media.season ? `Season ${media.season}` : ''}</span>
+    <>
+      <Nav />
+      <div className="app-container">
+        <Featured />
+        <div className="app-content">
+          {mediaCollection.map((media: Media, idx: number) => {
+              return (
+                <>
+                  <div title={media.name} key={idx} className="media">
+                    <Link to={`/media/${media.slug}`}>
+                      <img alt={`${media.name} poster`} className="media-poster" src={media.poster} />
+                      <span className="media-title">{media.name}</span>
+                      <div className="media-metadata">
+                        <span className="media-type">{media.type || 'Movie'}</span>
+                        <span className="media-season">{media.season ? `Season ${media.season}` : ''}</span>
+                      </div>
+                    </Link>
+                    <div className="inner-boxshadow">
                     </div>
-                  </Link>
-                  <div className="inner-boxshadow">
                   </div>
-                </div>
-              </>
-            )
-          })}
+                </>
+              )
+            })}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

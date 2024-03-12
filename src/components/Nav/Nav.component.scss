@@ -77,6 +77,14 @@
         padding: 16px 24px;
         cursor: pointer;
 
+        a {
+          color: white;
+          text-decoration: none;
+          &::visited {
+            color: white;
+          }
+        }
+
         .logo {
           margin-left: 24px;
         }

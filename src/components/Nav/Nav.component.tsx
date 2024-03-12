@@ -3,9 +3,9 @@ import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
 import { SearchBar } from '../SearchBar/SearchBar.component';
 import './Nav.component.scss';
-import { FeedbackModal } from '../FeedbackModal/FeedbackModal.component';
 import { callApi } from '../../utils/api';
 import { Media } from '../../types';
+import { Link } from "react-router-dom";
 
 const goTo = (url: string) => {
   window.location.href = url;
@@ -13,12 +13,7 @@ const goTo = (url: string) => {
 
 export const Nav = () => {
   const [ showNavMenu, setShowNavMenu ] = useState(false);
-  const [ showFeedbackModal, setShowFeedbackModal ] = useState(false);
   const [ searchPool, setSearchPool ] = useState<Media[]>([]);
-
-  const closeFeedbackModal = () => {
-    setShowFeedbackModal(false);
-  }
 
   const switchShowNavMenu = () => {setShowNavMenu(!showNavMenu)};
   const hidehShowNavMenu = (ele:any) => {
@@ -48,7 +43,6 @@ export const Nav = () => {
 
   return (
     <>
-      <FeedbackModal isOpen={showFeedbackModal} closeCallback={closeFeedbackModal}/> 
       <div className="navbar-container">
         <nav className="navbar navbar-desktop">
           <div onClick={switchShowNavMenu}><i className="fa-solid fa-bars"></i></div>
@@ -92,10 +86,11 @@ export const Nav = () => {
             {/* <li className="nav-menu-item"><i className="fa-solid fa-list nav-menu-icon"></i>Browse</li> */}
             <li
               className="nav-menu-item"
-              onClick={() => setShowFeedbackModal(true)}
             >
               <i className="fa-solid fa-comment-dots nav-menu-icon"></i>
-                Feedback
+                <Link to="/feedback">
+                  Feedback
+                </Link>
             </li>
             <li 
               className="nav-menu-item"

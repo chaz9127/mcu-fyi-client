@@ -7,6 +7,7 @@ import { useLayoutEffect, useState } from 'react';
 import { Media } from '../../types';
 import { PhaseRow } from '../../components/PhaseRow/PhaseRow.component';
 import { Button } from '../../components/Button/Button.component';
+import { Nav } from '../../components/Nav/Nav.component';
 
 export const MediaInfo = () => {
   const { slug } = useParams();
@@ -32,50 +33,53 @@ export const MediaInfo = () => {
   const releaseYear = releaseDate.getFullYear();
    
   return (
-    <div className="media-info-container">
-      <div className="media-info-image-container">
-        <img className="media-info-image" alt={`poster of ${media?.name}`} src={media?.poster} />
-        <div className="mobile-only">
-          <h1 className="media-info-title">{media?.name}</h1> <span className="media-info-divider">|</span> <span className="media-info-metadata-item">{releaseYear}</span>
+    <>
+      <Nav />
+      <div className="media-info-container">
+        <div className="media-info-image-container">
+          <img className="media-info-image" alt={`poster of ${media?.name}`} src={media?.poster} />
+          <div className="mobile-only">
+            <h1 className="media-info-title">{media?.name}</h1> <span className="media-info-divider">|</span> <span className="media-info-metadata-item">{releaseYear}</span>
+          </div>
+          <div className="media-info-button-container">
+            <Button 
+              url={media?.playLink || ''}
+              text="Watch Now"
+              imgUrl={`${import.meta.env.VITE_CLIENT_URL}/images/logos/DisneyPlus.png`}
+            />
+            <Button 
+              url={media?.trailerLink || ''}
+              text="Watch Trailer"
+              secondary
+            />
+          </div>
         </div>
-        <div className="media-info-button-container">
-          <Button 
-            url={media?.playLink || ''}
-            text="Watch Now"
-            imgUrl={`${import.meta.env.VITE_CLIENT_URL}/images/logos/DisneyPlus.png`}
-          />
-          <Button 
-            url={media?.trailerLink || ''}
-            text="Watch Trailer"
-            secondary
-          />
-        </div>
-      </div>
-      <div className="media-info-details">
-        <h1 className="desktop-only media-info-title">{media?.name}</h1>
-        <div className="desktop-only media-info-metadata">
-          <span className="media-info-metadata-item">{releaseYear}</span>
-          <span className="media-info-metadata-item">{media?.duration}</span>
-        </div>
-        <div className="media-info-block">
-          <strong className="media-info-block-title-container">
-            <span className="media-info-block-title">Synopsis</span>
-          </strong>
-          <p className="media-info-block-content">
-            {media?.description}
-          </p>
-        </div>
-        {relatedMedia.length > 0 && (
+        <div className="media-info-details">
+          <h1 className="desktop-only media-info-title">{media?.name}</h1>
+          <div className="desktop-only media-info-metadata">
+            <span className="media-info-metadata-item">{releaseYear}</span>
+            <span className="media-info-metadata-item">{media?.duration}</span>
+          </div>
           <div className="media-info-block">
             <strong className="media-info-block-title-container">
-              <span className="media-info-block-title">Precursors</span>
+              <span className="media-info-block-title">Synopsis</span>
             </strong>
-            {relatedMedia.length > 0 && (
-              <PhaseRow phase={{name: 'Precursor', media: relatedMedia}} />
-            )}
+            <p className="media-info-block-content">
+              {media?.description}
+            </p>
           </div>
-        )}
+          {relatedMedia.length > 0 && (
+            <div className="media-info-block">
+              <strong className="media-info-block-title-container">
+                <span className="media-info-block-title">Precursors</span>
+              </strong>
+              {relatedMedia.length > 0 && (
+                <PhaseRow phase={{name: 'Precursor', media: relatedMedia}} />
+              )}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
