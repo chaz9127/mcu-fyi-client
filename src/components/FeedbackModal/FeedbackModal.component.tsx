@@ -3,7 +3,7 @@ import { Button } from '../Button/Button.component';
 import './FeedbackModal.style.scss';
 
 type FeedbackModalProps = {
-  isOpen: Boolean,
+  isOpen: boolean,
   closeCallback: () => void,
 } 
 
@@ -22,11 +22,11 @@ export const FeedbackModal = (props: FeedbackModalProps) => {
     <div className="feedback-container" onClick={closeCallback}>
       {/* move action to onSubmit() and develop a feedback backend */}
       <form onClick={(e) => {e.stopPropagation()}} className="feedback-form" action="https://formsubmit.co/chasanid@gmail.com" method="POST">
-        <h2>Send Feedback</h2>
+        <h2>Send us feedback</h2>
         <div className="feedback-input-container">
           <div className="feedback-input">
             <label htmlFor="email">Email (optional):</label>
-            <input type="email" name="email" />
+            <i className="fa-regular fa-envelope"></i><input type="email" name="email" />
           </div>
           <div className="feedback-input">  
             <label htmlFor="feedback-message">Message*:</label>

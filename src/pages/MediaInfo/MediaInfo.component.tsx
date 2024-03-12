@@ -30,8 +30,6 @@ export const MediaInfo = () => {
   const relaseDateMilli = media?.releaseDate || 0;
   const releaseDate = new Date(relaseDateMilli);
   const releaseYear = releaseDate.getFullYear();
-
-  console.log({releaseDate, releaseYear})
    
   return (
     <div className="media-info-container">

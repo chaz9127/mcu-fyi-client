@@ -1,54 +1,46 @@
 import { useState, useEffect } from 'react';
 import { Featured } from '../../components/Featured/Featured.component';
-import { PhaseRow } from '../../components/PhaseRow/PhaseRow.component';
-import { Phase } from '../../types';
 import { Media } from '../../types';
 import { callApi } from '../../utils/api';
+import { Link } from "react-router-dom";
 import './Home.scss';
 
 export const Home = () => {
-  const [phases, setPhases] = useState<Array<Array<Media>>>([]);
+  // const [phases, setPhases] = useState<Array<Array<Media>>>([]);
+  const [mediaCollection, setMediaCollection] = useState<Array<Media>>([])
 
   useEffect(() => {
     const getMedia = async () => {
-      const buildParams = '?sortBy=phase'
-      const data = await callApi(`/media${buildParams}`);
-      return data;
+      const data = await callApi(`/media`);
+      setMediaCollection(data);
     }
-  
-    const getPhases = async () => {
-      const allMedia: Media[] = await getMedia();
-      const phases: Array<Array<Media>> = [];
-      allMedia.forEach(med => {
-        const medPhase = med.phase-1;
-        const currentPhase = phases[medPhase];
-        if (currentPhase) {
-          phases[medPhase].push(med);
-        } else {
-          phases.push([med]);
-        }
-      });
-      
-      setPhases(phases);
-    }
-    getPhases();
+    
+    getMedia();
     
   }, [])
 
-  
   return (
-    <div className="App">
+    <div className="app-container">
       <Featured />
       <div className="app-content">
-
-        {Array(phases.length).fill(0).map((item: number, idx: number) => {
-          const mediaForPhase: Media[] = phases[item + idx]; //just using item for ts to ignore it
-          const phase: Phase = {
-            name: `Phase ${idx+1}`,
-            media: mediaForPhase,
-          }
-          return <PhaseRow key={idx+1} phase={phase}/>
-        })}
+        {mediaCollection.map((media: Media, idx: number) => {
+            return (
+              <>
+                <div title={media.name} key={idx} className="media">
+                  <Link to={`/media/${media.slug}`}>
+                    <img alt={`${media.name} poster`} className="media-poster" src={media.poster} />
+                    <span className="media-title">{media.name}</span>
+                    <div className="media-metadata">
+                      <span className="media-type">{media.type || 'Movie'}</span>
+                      <span className="media-season">{media.season ? `Season ${media.season}` : ''}</span>
+                    </div>
+                  </Link>
+                  <div className="inner-boxshadow">
+                  </div>
+                </div>
+              </>
+            )
+          })}
       </div>
     </div>
   );

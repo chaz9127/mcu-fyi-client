@@ -1,7 +1,15 @@
 import './Featured.component.scss';
 import '../../types/Featured';
 import { Button } from '../Button/Button.component';
-import featuredData from '../../TestData/featured.json';
+
+const featuredData = {
+  "featured": {
+    "logoImageUrl": "/images/logos/Loki.png",
+    "showTitle": "Loki",
+    "watchUrl": "https://www.disneyplus.com/series/loki/6pARMvILBGzF",
+    "watchIconUrl": "/images/logos/DisneyPlus.png"
+  }
+}
 
 export const Featured = () => {
   return (                 

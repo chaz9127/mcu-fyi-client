@@ -1,8 +1,10 @@
+@import '../../styles/variables.scss';
+
 .media-info-container {
   padding: 35px;
   display: flex;
   color: white;
-  max-width: 1176px;
+  max-width: $maxWidth;
   margin: 0 auto;
   box-sizing: border-box;
 

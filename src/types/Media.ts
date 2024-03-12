@@ -10,4 +10,6 @@ export type Media = {
   trailerLink: string,
   relatedMedia: string[],
   duration?: number,
+  type: string,
+  season?: string,
 }
