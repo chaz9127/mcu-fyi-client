@@ -1,0 +1,58 @@
+.media {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    &:hover {
+      .inner-boxshadow {
+        box-shadow: inset black 0px 0px 16px;
+        position: absolute;
+        width: 100%;
+        height: calc(100% - 65px);
+        top: 0;
+        left: 0;
+        cursor: pointer;
+        pointer-events: none;
+      }
+    }
+    a {
+      display: flex;
+      flex-direction: column;
+      font-size: 16px;
+      color: white;
+      text-decoration: none;
+      max-width: 200px;
+      &:visited {
+        color: white;
+        text-decoration: none;
+      }
+      .media-poster {
+        width: 200px;
+        aspect-ratio: 27/40;
+      }
+      .media-title {
+        margin-top: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: bold;
+      }
+      .media-metadata {
+        display: flex;
+        justify-content: space-between;
+        height: 24px;
+        line-height: 20px;
+        color: rgba(255,255,255,.5);
+        margin-top: 8px;
+        font-size: 12px;
+  
+        .media-type {
+          border: 2px rgba(255,255,255,.5) solid;
+          border-radius: 5px;
+          padding: 0 3px;
+        }
+        .media-season {
+          font-size: 16px;
+        }
+      }
+    }
+  }

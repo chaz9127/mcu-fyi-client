@@ -1,10 +1,10 @@
-import { Phase, Media } from '../../types';
+import { Phase, Media as MediaType } from '../../types';
+import { Media } from '../Media/Media.component';
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import './PhaseRow.component.scss';
 import "react-horizontal-scrolling-menu/dist/styles.css";
 import "../Carousel/styles.scss";
 import { LeftArrow, RightArrow } from "../Carousel/arrows";
-import { Link } from "react-router-dom";
 
 type PhaseRowProps = {
   phase: Phase
@@ -21,14 +21,12 @@ export const PhaseRow = (props: PhaseRowProps) => {
             LeftArrow={LeftArrow}
             RightArrow={RightArrow}
           >
-            {media.map((media: Media, idx: number) => {
+            {media.map((media: MediaType, idx: number) => {
               return (
                 <div key={idx} className="phase-result">
-                  <Link to={`/media/${media.slug}`}>
-                    <img alt={`${media.name} poster`} className="phase-result-poster" src={media.poster} />
-                    <span className="phase-result-title" >{media.name}</span>
-                  </Link>
+                  <Media media={media} key={idx} />
                 </div>
+                  
               )
             })}
           </ScrollMenu>

@@ -80,17 +80,19 @@ export const Nav = () => {
               data-tooltip-content="Coming Soon"
               data-tooltip-place="right"
             >
-              <i className="fa-solid fa-user-plus nav-menu-icon"></i>
-              Login / Register
+              <Link to="/">
+                <i className="fa-solid fa-user-plus nav-menu-icon"></i>
+                Login / Register
+              </Link>
             </li>
             {/* <li className="nav-menu-item"><i className="fa-solid fa-list nav-menu-icon"></i>Browse</li> */}
             <li
               className="nav-menu-item"
             >
-              <i className="fa-solid fa-comment-dots nav-menu-icon"></i>
-                <Link to="/feedback">
-                  Feedback
-                </Link>
+              <Link to="/feedback">
+                <i className="fa-solid fa-comment-dots nav-menu-icon"></i>
+                Feedback
+              </Link>
             </li>
             <li 
               className="nav-menu-item"
@@ -98,8 +100,10 @@ export const Nav = () => {
               data-tooltip-content="Coming Soon"
               data-tooltip-place="right"
             >
-              <i className="fa-solid fa-coins nav-menu-icon"></i>
-              Donate
+              <Link to="/">
+                <i className="fa-solid fa-coins nav-menu-icon"></i>
+                Donate
+              </Link>
             </li>
           </ul>
         </div>}

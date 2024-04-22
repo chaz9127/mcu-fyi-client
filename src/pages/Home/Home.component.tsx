@@ -1,14 +1,13 @@
-import { useState, useEffect } from 'react';
+leimport { useState, useEffect } from 'react';
 import { Featured } from '../../components/Featured/Featured.component';
-import { Media } from '../../types';
+import { Media as MediaType } from '../../types';
 import { callApi } from '../../utils/api';
-import { Link } from "react-router-dom";
+import { Media } from '../../components/Media/Media.component'
 import './Home.scss';
 import { Nav } from '../../components/Nav/Nav.component';
 
 export const Home = () => {
-  // const [phases, setPhases] = useState<Array<Array<Media>>>([]);
-  const [mediaCollection, setMediaCollection] = useState<Array<Media>>([])
+  const [mediaCollection, setMediaCollection] = useState<Array<MediaType>>([])
 
   useEffect(() => {
     const getMedia = async () => {
@@ -26,22 +25,11 @@ export const Home = () => {
       <div className="app-container">
         <Featured />
         <div className="app-content">
-          {mediaCollection.map((media: Media, idx: number) => {
+          {mediaCollection.map((media: MediaType, idx: number) => {
               return (
-                <>
-                  <div title={media.name} key={idx} className="media">
-                    <Link to={`/media/${media.slug}`}>
-                      <img alt={`${media.name} poster`} className="media-poster" src={media.poster} />
-                      <span className="media-title">{media.name}</span>
-                      <div className="media-metadata">
-                        <span className="media-type">{media.type || 'Movie'}</span>
-                        <span className="media-season">{media.season ? `Season ${media.season}` : ''}</span>
-                      </div>
-                    </Link>
-                    <div className="inner-boxshadow">
-                    </div>
-                  </div>
-                </>
+                <div className="media-container">
+                  <Media media={media} key={idx}/>
+                </div>
               )
             })}
         </div>
