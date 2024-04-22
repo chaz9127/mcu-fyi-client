@@ -1,4 +1,4 @@
-leimport { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Featured } from '../../components/Featured/Featured.component';
 import { Media as MediaType } from '../../types';
 import { callApi } from '../../utils/api';
