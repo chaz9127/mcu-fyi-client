@@ -1,10 +1,9 @@
 @import '../../styles/variables.scss';
 @import '../../styles/breakpoints.scss';
+@import '../../styles/colors.scss';
 
 .app-container {
   font-family: 'Noto Sans Pahawh Hmong';
-  // max-width: $maxWidth;
-  // margin: 0 auto;
 }
 
 .App-logo {
@@ -43,6 +42,25 @@ ul {
 
 .media-container {
   margin: 32px 16px 0 16px;
+}
+
+.filter-bar {
+  padding: 32px 0 0 48px;
+  width: 100%;
+  label {
+    color: $secondaryText;
+    display: inline-block;
+    margin-right: 12px;
+  }
+  .select-menu {
+    width: 150px;
+    height: 2rem;
+    background-color: #fff;
+    border: 1px solid #caced1;
+    border-radius: 0.25rem;
+    color: #000;
+    cursor: pointer;
+  }
 }
 
 @media (max-width: $maxMobileWidth) {
