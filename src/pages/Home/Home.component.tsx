@@ -10,7 +10,7 @@ export const Home = () => {
   const [mediaCollection, setMediaCollection] = useState<Array<MediaType>>([])
   const [sortByValue, setSortByValue] = useState<string>('releaseDate');
 
-  const sortByCompare = (a, b) => {
+  const sortByCompare = (a: MediaType, b: MediaType) => {
     if (sortByValue === 'name') {
       if ( a[sortByValue] < b[sortByValue]) {
         return -1;
@@ -39,8 +39,8 @@ export const Home = () => {
     setMediaCollection([...mediaCollection].sort(sortByCompare));
   }, [sortByValue])
 
-  const setSort = (e: React.FormEvent<HTMLInputElement>) => {
-    setSortByValue(e.target.value);
+  const setSort = (e: React.FormEvent<HTMLSelectElement>) => {
+    setSortByValue((e.target as HTMLInputElement).value);
   }
 
   return (
