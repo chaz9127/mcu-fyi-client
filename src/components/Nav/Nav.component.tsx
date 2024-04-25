@@ -16,14 +16,14 @@ export const Nav = () => {
   const [ searchPool, setSearchPool ] = useState<Media[]>([]);
 
   const switchShowNavMenu = () => {setShowNavMenu(!showNavMenu)};
-  const hidehShowNavMenu = (ele:any) => {
-    const clickedMenu = ele.target.className.includes('fa-bars');
+  const hideShowNavMenu = (ele:Event) => {
+    const clickedMenu = (ele?.target as HTMLElement).classList.value.includes('fa-bars');
     !clickedMenu && setShowNavMenu(false);
   };
   useEffect(() => {
-    document.getElementsByTagName('html')[0].addEventListener('click', hidehShowNavMenu, false);
+    document.getElementsByTagName('html')[0].addEventListener('click', hideShowNavMenu, false);
 
-    return () => document.getElementsByTagName('body')[0].removeEventListener('click', hidehShowNavMenu, false);
+    return () => document.getElementsByTagName('body')[0].removeEventListener('click', hideShowNavMenu, false);
   }, [])  
 
   useEffect(() => {
@@ -76,11 +76,8 @@ export const Nav = () => {
             </li>
             <li
               className="nav-menu-item"
-              data-tooltip-id="login-register"
-              data-tooltip-content="Coming Soon"
-              data-tooltip-place="right"
             >
-              <Link to="/">
+              <Link to="/auth">
                 <i className="fa-solid fa-user-plus nav-menu-icon"></i>
                 Login / Register
               </Link>
@@ -107,7 +104,6 @@ export const Nav = () => {
             </li>
           </ul>
         </div>}
-        <Tooltip id="login-register" />
         <Tooltip id="donate-buttom-img" />
       </div>
     </>

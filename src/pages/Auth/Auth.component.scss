@@ -18,12 +18,20 @@
             justify-content: space-evenly;
 
             .button {
-                margin: 10px;
+                margin: 0 0 20px 0;
+                &:nth-child(odd) {
+                    margin-right: 15px;
+                }
+
+                span {
+                    width: 100%;
+                    text-align: center;
+                }
             }
         }
 
         .auth-page-title {
-            margin-bottom: 48px;
+            margin-bottom: 16px;
         }
 
         .auth-form-input-container {

@@ -2,28 +2,29 @@ import './Button.component.scss';
 type ButtonProps = {
   text: string,
   url?: string,
-  callback?: (e: Event) => void,
+  callback?: (e: HTMLButtonElement) => void,
   textOnly?: boolean,
   buttonType?: "button" | "submit" | "reset" | undefined,
   iconClass?: string,
   imgUrl?: string,
   secondary?: boolean,
   tertiary?: boolean,
+  disabled?: boolean,
 }
 export const Button = (props: ButtonProps) => {
-  const {url, callback, text, iconClass, imgUrl, secondary, tertiary, textOnly, buttonType} = props;
+  const {url, callback, text, iconClass, imgUrl, secondary, tertiary, textOnly, buttonType, disabled} = props;
 
   const goTo = (goToUrl: string) => {
     window.location.href = goToUrl; //should eventually replace with react-router-dom
   };
 
-  const buttonCallback = () => {
+  const buttonCallback = (e: Event) => {
     if (url) {
       goTo(url);
     } else if (callback) {
-      return callback
+      return callback(e)
     } else {
-      return undefined;
+      return ()=>{};
     }
   }
 
@@ -43,7 +44,7 @@ export const Button = (props: ButtonProps) => {
   }
 
   return (
-    <button type={buttonType} onClick={buttonCallback} className={getClassName()}>
+    <button disabled={disabled} type={buttonType} onClick={buttonCallback} className={getClassName()}>
       {iconClass && (
         <span className="button-icon">
           <i className={iconClass}></i>
