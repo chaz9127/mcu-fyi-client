@@ -2,7 +2,7 @@ import './Button.component.scss';
 type ButtonProps = {
   text: string,
   url?: string,
-  callback?: (e: HTMLButtonElement) => void,
+  callback?: (e: React.MouseEvent) => void,
   textOnly?: boolean,
   buttonType?: "button" | "submit" | "reset" | undefined,
   iconClass?: string,
@@ -18,11 +18,11 @@ export const Button = (props: ButtonProps) => {
     window.location.href = goToUrl; //should eventually replace with react-router-dom
   };
 
-  const buttonCallback = (e: Event) => {
+  const buttonCallback = (ev: React.MouseEvent) => {
     if (url) {
       goTo(url);
     } else if (callback) {
-      return callback(e)
+      return callback(ev)
     } else {
       return ()=>{};
     }
@@ -35,9 +35,9 @@ export const Button = (props: ButtonProps) => {
       tertiary,
       textOnly,
     }
-
-    Object.keys(classes).forEach(key => {
-      returnClass += classes[key as keyof Object] ? ` ${key}-button`: '';
+    Object.keys(classes).forEach((key,) => {
+      const hasClass = classes[key as keyof  typeof classes];
+      returnClass += hasClass ? ` ${key}-button`: '';
     })
 
     return returnClass;
