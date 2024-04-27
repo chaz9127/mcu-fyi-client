@@ -14,6 +14,13 @@
         pointer-events: none;
       }
     }
+    .watched-banner {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      color: white;
+      cursor: pointer;
+    }
     a {
       display: flex;
       flex-direction: column;

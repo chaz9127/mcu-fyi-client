@@ -9,6 +9,9 @@ type MediaProps = {
 
 export const Media = (props: MediaProps) => {
     const {name, slug, poster, season, type} = props.media;
+    const toggleWatch = () => {
+        alert('toggle!')
+    };
     return (
         <div title={name} className="media">
             <Link to={`/media/${slug}`}>
@@ -20,6 +23,9 @@ export const Media = (props: MediaProps) => {
                 </div>
             </Link>
             <div className="inner-boxshadow">
+            </div>
+            <div className="watched-banner" onClick={toggleWatch}>
+                <i className="fa-solid fa-check"></i>
             </div>
         </div>
     )
