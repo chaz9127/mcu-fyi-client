@@ -16,12 +16,12 @@ export const MediaInfo = () => {
 
   useLayoutEffect(() => {
     const mediaItem = async () => {
-      const data =( await callApi(`/media/${slug}`))[0];
+      const data =( await callApi(`/media/${slug}`));
       setMedia(data);
     }
 
     const mediaRelated = async () => {
-      const data =( await callApi(`/media/related/${slug}`));
+      const data =( await callApi(`/media/${slug}/related`));
       setRelatedMedia(data);
     }
 
