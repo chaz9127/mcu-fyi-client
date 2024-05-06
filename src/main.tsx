@@ -10,6 +10,8 @@ import {
 } from "react-router-dom";
 import { MediaInfo } from './pages/MediaInfo/MediaInfo.component';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
+import { Provider } from 'react-redux';
+import { store } from './features/store';
 
 if (import.meta.env.VITE_NODE_ENV === 'production') disableReactDevTools(); 
 
@@ -42,6 +44,8 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
