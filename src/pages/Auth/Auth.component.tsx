@@ -1,16 +1,25 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { postUser } from '../../features/usersSlice';
+import { useNavigate } from 'react-router-dom';
 import './Auth.component.scss'
 import { Button } from '../../components/Button/Button.component';
 import { Nav } from '../../components/Nav/Nav.component';
-import { SERVER_URL } from '../../constants/server';
+import { User } from '../../types';
+// import { SERVER_URL } from '../../constants/server';
+import type { AppDispatch } from '../../features/store';
 
 export const Auth = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch.withTypes<AppDispatch>()();
+    // const userStatus = useSelector(getAddUserStatus)
+    // const userError = useSelector(getAddUserError)
     const [authState, setAuthState] = useState('register');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const isRegisterState = () => {
-        return authState === 'register';
+        return authState === 'register'; 
     }
 
     const isFormValid = () => {
@@ -23,24 +32,18 @@ export const Auth = () => {
 
     const submitForm = async () => {
         if (isFormValid() && isRegisterState()) {
-            await fetch(`${SERVER_URL}/users`, {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({email, password})
-            }).then(res => {
-                if (!res.ok) {
-                    res.text().then((data) => {
-                        alert(JSON.parse(data).message)
-                    })
+            try {
+                const data = await dispatch(
+                    postUser(({email, password}) as User)
+                ).unwrap()
+                if(data) {
+                    navigate('/');
                 } else {
-                    alert('success!')
-                    window.location.href = '/';
+                    throw('Failed to create user')
                 }
-            }).catch(err => {
-                alert(err.message)
-            })
+            } catch(err) {
+                console.error('Failed to create user');
+            }
         }
     }
     return (

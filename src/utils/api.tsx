@@ -8,7 +8,6 @@ const callApi = async (directory: string, params?: APIMethod) => {
   }
   if (betterParams?.method === 'get') {
     const result = await (await fetch(`${SERVER_URL}${directory}`, betterParams)).json();
-    // console.log('fetch?', `${SERVER_URL}${directory}`)
     return result;
   } else if (betterParams?.method === 'delete') {
     return await (await fetch(`${SERVER_URL}${directory}`, betterParams)).json();

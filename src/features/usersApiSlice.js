@@ -30,7 +30,7 @@ const selectUserData = createSelector(
     selectUserResult,
     userResult => userResult.data
 )
-console.log('selectors = ', userAdapter.getSelectors(state => selectUserData(state) ?? initialState))
+
 export const {
     selectById: selectUserById,
 } = userAdapter.getSelectors(state => selectUserData(state) ?? initialState)

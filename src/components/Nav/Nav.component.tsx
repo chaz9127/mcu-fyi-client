@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import type { AppDispatch } from '../../features/store';
+import {  getCurrentUser, removeCurrentUser } from '../../features/usersSlice';
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
 import { SearchBar } from '../SearchBar/SearchBar.component';
 import './Nav.component.scss';
 import { callApi } from '../../utils/api';
 import { Media } from '../../types';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const goTo = (url: string) => {
   window.location.href = url;
@@ -14,12 +17,26 @@ const goTo = (url: string) => {
 export const Nav = () => {
   const [ showNavMenu, setShowNavMenu ] = useState(false);
   const [ searchPool, setSearchPool ] = useState<Media[]>([]);
-
+  const { state } = useLocation();
+  const currentUser = useSelector(getCurrentUser);
+  const dispatch = useDispatch.withTypes<AppDispatch>()();
+  const hasCurrentUser = Object.keys(currentUser).length > 0;
+  
   const switchShowNavMenu = () => {setShowNavMenu(!showNavMenu)};
   const hideShowNavMenu = (ele:Event) => {
     const clickedMenu = (ele?.target as HTMLElement).classList.value.includes('fa-bars');
     !clickedMenu && setShowNavMenu(false);
   };
+  useEffect(() => {
+    try {
+      if (state && state.logout) {
+        dispatch(removeCurrentUser())
+      }
+    }
+    catch(err) {
+      console.error('Failed to logout');
+    }
+  }, [state, dispatch])
   useEffect(() => {
     document.getElementsByTagName('html')[0].addEventListener('click', hideShowNavMenu, false);
 
@@ -40,6 +57,28 @@ export const Nav = () => {
     getSearchPool();
     
   }, [])
+
+  const getAuthItem = () => {
+    if (hasCurrentUser) {
+      return (
+        <li className="nav-menu-item">
+          <Link to="/" state={{ logout: true }} >
+            <i className="fa-solid fa-user-plus nav-menu-icon"></i>
+            Logout
+          </Link>
+        </li>
+      )
+    } else {
+      return (
+        <li className="nav-menu-item">
+          <Link to="/auth">
+            <i className="fa-solid fa-user-plus nav-menu-icon"></i>
+            Login / Register
+          </Link>
+        </li>
+      )
+    }
+  }
 
   return (
     <>
@@ -74,14 +113,7 @@ export const Nav = () => {
                 <span>TheMcu.fyi</span>
               </div>
             </li>
-            <li
-              className="nav-menu-item"
-            >
-              <Link to="/auth">
-                <i className="fa-solid fa-user-plus nav-menu-icon"></i>
-                Login / Register
-              </Link>
-            </li>
+            {getAuthItem()}
             {/* <li className="nav-menu-item"><i className="fa-solid fa-list nav-menu-icon"></i>Browse</li> */}
             <li
               className="nav-menu-item"
