@@ -10,10 +10,8 @@ import { setCredientals } from '../../features/authSlice';
 import { Tabs } from '../../components/Tabs/Tabs.component';
 
 type ErrorResponseType = {
-    originalStatus?: {
-        message: string | null | undefined,
-        status:  number | null | undefined
-    }
+    message: string | null | undefined,
+    status:  number | null | undefined,
 }
 
 export const Auth = () => {
@@ -34,18 +32,28 @@ export const Auth = () => {
     };
 
     useEffect(() => {
+        setPassword('');
+        setConfirmPassword('');
+        setEmail('');
+        if (emailRef?.current)          emailRef.current.value = '';
+        if (passwordRef.current)        passwordRef.current.value = '';
+        if(confirmPasswordRef.current)  confirmPasswordRef.current.value = '';
+    }, [activeTab])
+    useEffect(() => {
         const errors = [];
-        if (emailRef?.current?.value && emailRef?.current?.validationMessage) {
-            const truncatedMessage = emailRef?.current?.validationMessage.split('.')[0]
-            errors.push(truncatedMessage);
+        if (isRegisterState()) {
+            if (emailRef?.current?.value && emailRef?.current?.validationMessage) {
+                const truncatedMessage = emailRef?.current?.validationMessage.split('.')[0]
+                errors.push(truncatedMessage);
+            }
+            if (confirmPassword && password !== confirmPassword) {
+                errors.push('Passwords must match');
+            }
+            if (passwordRef?.current?.value && passwordRef?.current?.validationMessage) {
+                errors.push(passwordRef?.current?.validationMessage);
+            }
         }
-        if (confirmPassword && password !== confirmPassword) {
-            errors.push('Passwords must match');
-        }
-        if (passwordRef?.current?.value && passwordRef?.current?.validationMessage) {
-            errors.push(passwordRef?.current?.validationMessage);
-        }
-        console.log('errors', errors)
+        
         setErrorMessage(errors);
     }, [email, password, confirmPassword]);
 
@@ -53,7 +61,7 @@ export const Auth = () => {
         if (isRegisterState()) {
             return email && password && password.length > 7 && password === confirmPassword
         } else {
-            return email && password
+            return email && errorMessage.length === 0 && password
         }
     }
 
@@ -79,12 +87,13 @@ export const Auth = () => {
                 navigate('/');
             } catch (err) {
                 const currentError = (err as ErrorResponseType);
-                if (!currentError.originalStatus) {
+                
+                if (!currentError.status) {
                     setErrorMessage(['No Server Response'])
-                } else if (currentError?.originalStatus?.status === 400) {
+                } else if (currentError?.status === 400) {
                     setErrorMessage(['Missing Email or Password']);
-                } else if (currentError?.originalStatus?.status === 401) {
-                    setErrorMessage(['Unauthorized']);
+                } else if (currentError?.status === 401) {
+                    setErrorMessage(['Incorrect Email or Password']);
                 } else {
                     setErrorMessage(['Login Failed']);
                 }
