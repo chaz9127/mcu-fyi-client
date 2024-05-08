@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { postUser } from '../../features/usersSlice';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +8,15 @@ import { Nav } from '../../components/Nav/Nav.component';
 import { User } from '../../types';
 // import { SERVER_URL } from '../../constants/server';
 import type { AppDispatch } from '../../features/store';
+import { useLoginMutation, useRegisterMutation } from '../../features/authApiSlice';
+import { setCredientals } from '../../features/authSlice';
+
+type ErrorResponse = {
+    originalStatus?: {
+        message: string | null | undefined,
+        status:  number | null | undefined
+    }
+}
 
 export const Auth = () => {
     const navigate = useNavigate();
@@ -15,12 +24,19 @@ export const Auth = () => {
     // const userStatus = useSelector(getAddUserStatus)
     // const userError = useSelector(getAddUserError)
     const [authState, setAuthState] = useState('register');
+    const [errorMessage, setErrorMessage] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [login, { loginLoading }] = useLoginMutation();
+    const [register, { registerLoading }] = useRegisterMutation();
     const isRegisterState = () => {
         return authState === 'register'; 
-    }
+    };
+
+    useEffect(() => {
+        setErrorMessage('');
+    }, [email, password]);
 
     const isFormValid = () => {
         if (isRegisterState()) {
@@ -33,16 +49,34 @@ export const Auth = () => {
     const submitForm = async () => {
         if (isFormValid() && isRegisterState()) {
             try {
-                const data = await dispatch(
-                    postUser(({email, password}) as User)
-                ).unwrap()
-                if(data) {
+                const userData = await register({email, password}).unwrap();
+                if(userData) {
+                    dispatch(setCredientals({ ...userData, email }));
+                    localStorage.setItem('accessToken', userData.accessToken || null)
                     navigate('/');
                 } else {
                     throw('Failed to create user')
                 }
             } catch(err) {
                 console.error('Failed to create user');
+            }
+        } else if (isFormValid() && !isRegisterState()) {
+            try {
+                const userData = await login({email, password}).unwrap()
+                dispatch(setCredientals({ ...userData, email }));
+                localStorage.setItem('accessToken', userData.accessToken || null)
+                navigate('/');
+            } catch (err) {
+                const currentError = (err as ErrorResponse);
+                if (!currentError.originalStatus) {
+                    setErrorMessage('No Server Response')
+                } else if (currentError?.originalStatus?.status === 400) {
+                    setErrorMessage('Missing Email or Password');
+                } else if (currentError?.originalStatus?.status === 401) {
+                    setErrorMessage('Unauthorized');
+                } else {
+                    setErrorMessage('Login Failed');
+                }
             }
         }
     }
@@ -54,15 +88,15 @@ export const Auth = () => {
                     <div className="auth-select-buttons">
                         <Button
                             buttonType={'button'}
-                            callback={() => {setAuthState('log in')}}
-                            text="Log In"
-                            secondary={authState !== 'log in'}
-                        />
-                        <Button
-                            buttonType={'button'}
                             callback={() => {setAuthState('register')}}
                             text="Register"
                             secondary={authState !== 'register'}
+                        />
+                        <Button
+                            buttonType={'button'}
+                            callback={() => {setAuthState('log in')}}
+                            text="Log In"
+                            secondary={authState !== 'log in'}
                         />
                     </div>
                     <div className="auth-form-input-container">

@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../features/store';
-import {  getCurrentUser, removeCurrentUser } from '../../features/usersSlice';
+import  { selectCurrentUser, logOut, setCredientals } from '../../features/authSlice';
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
 import { SearchBar } from '../SearchBar/SearchBar.component';
 import './Nav.component.scss';
 import { callApi } from '../../utils/api';
 import { Media } from '../../types';
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLoginWithTokenMutation } from '../../features/authApiSlice';
 
 const goTo = (url: string) => {
   window.location.href = url;
@@ -18,25 +19,55 @@ export const Nav = () => {
   const [ showNavMenu, setShowNavMenu ] = useState(false);
   const [ searchPool, setSearchPool ] = useState<Media[]>([]);
   const { state } = useLocation();
-  const currentUser = useSelector(getCurrentUser);
+  const navigate = useNavigate();
+  const initialNavigateState = {
+      logout: false,
+  }
+  const currentUser = useSelector(selectCurrentUser)
   const dispatch = useDispatch.withTypes<AppDispatch>()();
-  const hasCurrentUser = Object.keys(currentUser).length > 0;
+  const localAccessToken = localStorage.getItem('accessToken');
+  const [loginWithToken] = useLoginWithTokenMutation();
+  const noCurrentUser = currentUser === null || Object.keys(currentUser).length === 0;
   
   const switchShowNavMenu = () => {setShowNavMenu(!showNavMenu)};
   const hideShowNavMenu = (ele:Event) => {
     const clickedMenu = (ele?.target as HTMLElement).classList.value.includes('fa-bars');
     !clickedMenu && setShowNavMenu(false);
   };
+
+  useEffect(() => {
+    if (localAccessToken && noCurrentUser) {
+      try{
+        loginWithToken({token: localAccessToken}).then(res => {
+          if('data' in res) {
+            if (res.data.email) {
+              dispatch(setCredientals({ ...res['data'], accessToken: localAccessToken }));
+            }
+          } else if('error' in res) {
+            // login has expired
+            console.log('logging out')
+            dispatch(logOut());
+          }
+        })
+      } catch(err) {
+        console.log({err})
+        dispatch(logOut());
+      }
+      
+    }
+  }, [localAccessToken, dispatch, noCurrentUser, loginWithToken])
+
   useEffect(() => {
     try {
       if (state && state.logout) {
-        dispatch(removeCurrentUser())
+        dispatch(logOut());
+        navigate('/', {state: initialNavigateState});
       }
     }
     catch(err) {
       console.error('Failed to logout');
     }
-  }, [state, dispatch])
+  }, [state, dispatch, initialNavigateState, navigate])
   useEffect(() => {
     document.getElementsByTagName('html')[0].addEventListener('click', hideShowNavMenu, false);
 
@@ -59,7 +90,7 @@ export const Nav = () => {
   }, [])
 
   const getAuthItem = () => {
-    if (hasCurrentUser) {
+    if (!noCurrentUser) {
       return (
         <li className="nav-menu-item">
           <Link to="/" state={{ logout: true }} >
@@ -114,7 +145,6 @@ export const Nav = () => {
               </div>
             </li>
             {getAuthItem()}
-            {/* <li className="nav-menu-item"><i className="fa-solid fa-list nav-menu-icon"></i>Browse</li> */}
             <li
               className="nav-menu-item"
             >

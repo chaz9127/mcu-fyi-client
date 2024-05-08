@@ -19,8 +19,11 @@ type UserSlice = {
 
 const initialState = {
     currentUser: {},
-    status: 'idle',
-    error: '',
+    token: null,
+    hasError: false,
+    hasSuccess: false,
+    isLoading: false,
+    message: '',
 }
 
 export const postUser = createAsyncThunk('/users', async (body: User) => {

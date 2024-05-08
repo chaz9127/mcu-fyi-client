@@ -1,7 +1,8 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    user: null,
+    currentUser: {},
+    token: null,
     hasError: false,
     hasSuccess: false,
     isLoading: false,
@@ -13,11 +14,14 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         setCredientals: (state, action) => {
-            const { accessToken } = action.payload
+            const { email, role, watched, accessToken } = action.payload
+            state.currentUser = { email, role, watched };
             state.token = accessToken;
         },
-        logOut: (state, action) => {
+        logOut: (state) => {
             state.token = null;
+            state.currentUser = null;
+            localStorage.removeItem('accessToken');
         }
     }
 })
@@ -27,3 +31,4 @@ export const { setCredientals, logOut } = authSlice.actions;
 export default authSlice.reducer;
 
 export const selectCurrentToken = (state) => state.auth.token;
+export const selectCurrentUser = (state) => state.auth.currentUser;
