@@ -1,12 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { postUser } from '../../features/usersSlice';
 import { useNavigate } from 'react-router-dom';
 import './Auth.component.scss'
 import { Button } from '../../components/Button/Button.component';
 import { Nav } from '../../components/Nav/Nav.component';
-import { User } from '../../types';
-// import { SERVER_URL } from '../../constants/server';
 import type { AppDispatch } from '../../features/store';
 import { useLoginMutation, useRegisterMutation } from '../../features/authApiSlice';
 import { setCredientals } from '../../features/authSlice';
@@ -21,15 +18,13 @@ type ErrorResponse = {
 export const Auth = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch.withTypes<AppDispatch>()();
-    // const userStatus = useSelector(getAddUserStatus)
-    // const userError = useSelector(getAddUserError)
     const [authState, setAuthState] = useState('register');
     const [errorMessage, setErrorMessage] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [login, { loginLoading }] = useLoginMutation();
-    const [register, { registerLoading }] = useRegisterMutation();
+    const [login] = useLoginMutation();
+    const [register] = useRegisterMutation();
     const isRegisterState = () => {
         return authState === 'register'; 
     };
@@ -83,6 +78,11 @@ export const Auth = () => {
     return (
         <>
             <Nav />
+            {errorMessage && (
+                <div>
+                    {errorMessage}
+                </div>
+            )}
             <div className="auth-page-container">
                 <form onClick={(e) => {e.stopPropagation()}} className="auth-form">
                     <div className="auth-select-buttons">
