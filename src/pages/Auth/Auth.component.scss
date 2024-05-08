@@ -4,6 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     height: calc(100vh - 60px);
     .auth-form {
         width: 100%;
@@ -13,30 +14,13 @@
         position: relative;
         top: -80px;
 
-        .auth-select-buttons {
-            display: flex;
-            justify-content: space-evenly;
-
-            .button {
-                margin: 0 0 20px 0;
-                &:nth-child(odd) {
-                    margin-right: 15px;
-                }
-
-                span {
-                    width: 100%;
-                    text-align: center;
-                }
-            }
-        }
-
         .auth-page-title {
             margin-bottom: 16px;
         }
 
         .auth-form-input-container {
             position: relative;
-            margin: 0 0 24px 0;
+            margin: 32px 0 24px 0;
 
             .auth-form-label {
                 position: absolute;
@@ -80,5 +64,19 @@
             }
         }
         
+    }
+    .error-container {
+        padding: 8px;
+        box-sizing: border-box;
+        margin-bottom: 48px;
+        width: 100%;
+        max-width: 440px;
+        color: $primaryText;
+        border: 1px solid $primaryRed;
+
+        ul {
+            list-style-type: disc;
+            list-style-position: inside;
+        }
     }
 }
