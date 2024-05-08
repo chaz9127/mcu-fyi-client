@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../features/store';
+import { INITIAL_NAVIGATION_STATE } from '../../constants/state';
 import  { selectCurrentUser, logOut, setCredientals } from '../../features/authSlice';
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
@@ -20,9 +21,6 @@ export const Nav = () => {
   const [ searchPool, setSearchPool ] = useState<Media[]>([]);
   const { state } = useLocation();
   const navigate = useNavigate();
-  const initialNavigateState = {
-      logout: false,
-  }
   const currentUser = useSelector(selectCurrentUser)
   const dispatch = useDispatch.withTypes<AppDispatch>()();
   const localAccessToken = localStorage.getItem('accessToken');
@@ -61,13 +59,13 @@ export const Nav = () => {
     try {
       if (state && state.logout) {
         dispatch(logOut());
-        navigate('/', {state: initialNavigateState});
+        navigate('/', {state: INITIAL_NAVIGATION_STATE});
       }
     }
     catch(err) {
       console.error('Failed to logout');
     }
-  }, [state, dispatch, initialNavigateState, navigate])
+  }, [state, dispatch, navigate])
   useEffect(() => {
     document.getElementsByTagName('html')[0].addEventListener('click', hideShowNavMenu, false);
 
