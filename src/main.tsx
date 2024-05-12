@@ -12,6 +12,7 @@ import { MediaInfo } from './pages/MediaInfo/MediaInfo.component';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 import { Provider } from 'react-redux';
 import { store } from './features/store';
+import { ToastContainer } from 'react-toastify';
 
 if (import.meta.env.VITE_NODE_ENV === 'production') disableReactDevTools(); 
 
@@ -47,5 +48,6 @@ root.render(
     <Provider store={store}>
       <RouterProvider router={router} />
     </Provider>
+    <ToastContainer theme="dark" />
   </React.StrictMode>
 );

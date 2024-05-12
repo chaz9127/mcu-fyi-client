@@ -65,14 +65,14 @@ export const Auth = () => {
         }
     }
 
-    const submitForm = async () => {
+    const submitForm = async (e) => {
+        e.preventDefault();
         if (isFormValid() && isRegisterState()) {
             try {
                 const userData = await register({email, password}).unwrap();
                 if(userData) {
                     dispatch(setCredientals({ ...userData, email }));
-                    localStorage.setItem('accessToken', userData.accessToken || null)
-                    navigate('/');
+                    navigate('/', {state: {successfulRegister: true}});
                 } else {
                     throw('Failed to create user')
                 }
@@ -83,8 +83,7 @@ export const Auth = () => {
             try {
                 const userData = await login({email, password}).unwrap()
                 dispatch(setCredientals({ ...userData, email }));
-                localStorage.setItem('accessToken', userData.accessToken || null)
-                navigate('/');
+                navigate('/', {state: {successfulLogin: true}});
             } catch (err) {
                 const currentError = (err as ErrorResponseType);
                 
@@ -107,8 +106,8 @@ export const Auth = () => {
         return (
             <div className="error-container">
                 <ul>
-                    {errorMessage.map(error => {
-                        return <li>{error}</li>
+                    {errorMessage.map((error, idx) => {
+                        return <li key={idx}>{error}</li>
                     })}
                 </ul>
             </div>
@@ -127,12 +126,13 @@ export const Auth = () => {
                 }
             }
         })
-    }
+    };
+
     return (
         <>
             <Nav />
             <div className="auth-page-container">
-                <form onClick={(e) => {e.stopPropagation()}} className="auth-form">
+                <form onSubmit={(e) => {submitForm(e);}} className="auth-form">
                     {displayErrors()}
                     <Tabs tabs={getTabs()}/>
                     <div className="auth-form-input-container">
@@ -149,11 +149,10 @@ export const Auth = () => {
                     </div>}
                     <div className="auth-form-input-container">
                         <Button
-                            buttonType="button"
+                            buttonType="submit"
                             text="Submit"
                             textOnly={true}
                             disabled={!isFormValid()}
-                            callback={submitForm}
                         />
                     </div>
                     <input type="hidden" name="_captcha" value="false" />

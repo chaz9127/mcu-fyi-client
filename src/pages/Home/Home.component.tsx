@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useSearchParams, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Featured } from '../../components/Featured/Featured.component';
 import { Media as MediaType } from '../../types';
 import { callApi } from '../../utils/api';
@@ -9,7 +12,26 @@ import { Nav } from '../../components/Nav/Nav.component';
 export const Home = () => {
   const [mediaCollection, setMediaCollection] = useState<Array<MediaType>>([])
   const [sortByValue, setSortByValue] = useState<string>('releaseDate');
-
+  const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
+  useEffect(() => {
+    if (searchParams.get('submittedFeedback')) {
+      toast('Thanks for the feedback!');
+      setSearchParams({submittedFeedback: ''})
+    }
+  }, [searchParams, setSearchParams]);
+  useEffect(() => {
+    if (location?.state?.successfulLogin) {
+      location.state = {};
+      toast('Welcome back!');
+    } else if (location?.state?.successfulRegister) {
+      location.state = {};
+      toast('Welcome!');
+    } else if (location?.state?.logout) {
+      location.state = {};
+      toast('Successfully logged out.')
+    }
+  })
   const sortByCompare = (a: MediaType, b: MediaType) => {
     if (sortByValue === 'name') {
       if ( a[sortByValue] < b[sortByValue]) {

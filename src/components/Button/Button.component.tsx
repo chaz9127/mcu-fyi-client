@@ -10,9 +10,10 @@ type ButtonProps = {
   secondary?: boolean,
   tertiary?: boolean,
   disabled?: boolean,
+  loading?: boolean,
 }
 export const Button = (props: ButtonProps) => {
-  const {url, callback, text, iconClass, imgUrl, secondary, tertiary, textOnly, buttonType, disabled} = props;
+  const {url, callback, text, iconClass, imgUrl, secondary, tertiary, textOnly, buttonType, disabled, loading} = props;
 
   const goTo = (goToUrl: string) => {
     window.location.href = goToUrl; //should eventually replace with react-router-dom
@@ -44,7 +45,7 @@ export const Button = (props: ButtonProps) => {
   }
 
   return (
-    <button disabled={disabled} type={buttonType} onClick={buttonCallback} className={getClassName()}>
+    <button disabled={disabled || loading} type={buttonType} onClick={buttonCallback} className={getClassName()}>
       {iconClass && (
         <span className="button-icon">
           <i className={iconClass}></i>

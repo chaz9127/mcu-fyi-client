@@ -43,12 +43,10 @@ export const Nav = () => {
             }
           } else if('error' in res) {
             // login has expired
-            console.log('logging out')
             dispatch(logOut());
           }
         })
       } catch(err) {
-        console.log({err})
         dispatch(logOut());
       }
       
@@ -114,7 +112,7 @@ export const Nav = () => {
       <div className="navbar-container">
         <nav className="navbar navbar-desktop">
           <div onClick={switchShowNavMenu}><i className="fa-solid fa-bars"></i></div>
-          <div onClick={() => goTo('/')} className="logo">
+          <div onClick={() => navigate('/')} className="logo">
             <span>TheMcu.fyi</span>
           </div>
           <SearchBar results={searchPool} />
