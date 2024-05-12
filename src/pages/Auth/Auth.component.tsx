@@ -65,7 +65,7 @@ export const Auth = () => {
         }
     }
 
-    const submitForm = async (e) => {
+    const submitForm = async (e: React.FormEvent<HTMLSelectElement>) => {
         e.preventDefault();
         if (isFormValid() && isRegisterState()) {
             try {
