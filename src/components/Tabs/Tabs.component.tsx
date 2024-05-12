@@ -13,11 +13,11 @@ export const Tabs = (props: TabsProps) => {
     const { tabs } = props;
 
     const displayTabs = () => {
-        return tabs.map(tab => {
+        return tabs.map((tab, idx) => {
             let className = 'tab';
             if (tab.active) className += ' active';
 
-            return <div className={className} onClick={tab.setTab}>{tab.title}</div>
+            return <div className={className} onClick={tab.setTab} key={idx}>{tab.title}</div>
         })
     }
 

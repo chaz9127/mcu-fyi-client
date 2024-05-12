@@ -21,7 +21,7 @@ export const Nav = () => {
   const [ searchPool, setSearchPool ] = useState<Media[]>([]);
   const { state } = useLocation();
   const navigate = useNavigate();
-  const currentUser = useSelector(selectCurrentUser)
+  const currentUser = useSelector(selectCurrentUser);
   const dispatch = useDispatch.withTypes<AppDispatch>()();
   const localAccessToken = localStorage.getItem('accessToken');
   const [loginWithToken] = useLoginWithTokenMutation();
