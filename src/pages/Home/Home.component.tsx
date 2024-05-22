@@ -44,7 +44,7 @@ export const Home = () => {
     } else if (sortByValue === 'releaseDate' || sortByValue === 'chronologicalOrder') {
       return a[sortByValue] - b[sortByValue];
     }
-    
+    return 0;
   }
 
   useEffect(() => {
