@@ -5,7 +5,7 @@ import {
 import { callApi } from '../../utils/api';
 import { useLayoutEffect, useState } from 'react';
 import { Media } from '../../types';
-import { PhaseRow } from '../../components/PhaseRow/PhaseRow.component';
+import { MediaRow } from '../../components/MediaRow/MediaRow.component';
 import { Button } from '../../components/Button/Button.component';
 import { Nav } from '../../components/Nav/Nav.component';
 
@@ -71,10 +71,10 @@ export const MediaInfo = () => {
           {relatedMedia.length > 0 && (
             <div className="media-info-block">
               <strong className="media-info-block-title-container">
-                <span className="media-info-block-title">Precursors</span>
+                <span className="media-info-block-title">What to watch first:</span>
               </strong>
               {relatedMedia.length > 0 && (
-                <PhaseRow phase={{name: 'Precursor', media: relatedMedia}} />
+                <MediaRow mediaList={relatedMedia} />
               )}
             </div>
           )}

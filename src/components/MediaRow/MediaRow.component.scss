@@ -1,11 +1,10 @@
-.phase-container {
+.media-container {
   color: white;
-  .phase-results-container {
+  .media-results-container {
     overflow:hidden;
-    .phase-result a {
+    .media-result a {
       display: flex;
       flex-direction: column;
-      margin-right: 15px;
       font-size: 16px;
       font-weight: bold;
       color: white;
@@ -18,11 +17,11 @@
       &:hover {
         text-decoration: underline;
       }
-      .phase-result-poster {
+      .media-result-poster {
         width: 200px;
         aspect-ratio: 27/40;
       }
-      .phase-result-title {
+      .media-result-title {
         margin-top: 10px;
       }
     }
