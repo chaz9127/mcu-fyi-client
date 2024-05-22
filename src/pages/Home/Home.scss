@@ -59,7 +59,7 @@ ul {
   }
 }
 
-@media (max-width: $maxMobileWidth) {
+@media (max-width: $maxTabletWidth) {
   .filter-bar {
     padding: 32px 16px 0;
   }

@@ -116,7 +116,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: $maxTabletWidth) {
   .navbar-container {
     .navbar-desktop {
       display: none;
@@ -127,7 +127,7 @@
   }
 }
 
-@media (min-width: 769px) {
+@media (min-width: $maxMobileWidth) {
   .navbar-container {
     .navbar-desktop {
       display: flex;
