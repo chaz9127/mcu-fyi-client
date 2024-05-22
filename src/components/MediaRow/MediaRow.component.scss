@@ -1,4 +1,8 @@
+@import '../../styles/breakpoints.scss';
+
 .media-container {
+  margin: 32px 16px 0 16px;
+
   color: white;
   .media-results-container {
     overflow:hidden;
@@ -25,5 +29,11 @@
         margin-top: 10px;
       }
     }
+  }
+}
+
+@media (max-width: $maxMobileWidth) {
+  .media-container {
+    margin: 32px 0;
   }
 }
