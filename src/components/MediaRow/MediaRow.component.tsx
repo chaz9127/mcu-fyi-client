@@ -15,7 +15,7 @@ export const MediaRow = (props: MediaRowProps) => {
   const { mediaList, title: title='' } = props;
   const displayMedia = () => {
     return (
-      <div className="media-container">
+      <div className="media-container media-row-container">
         <h2 className="media-title">{title}</h2>
         <div className="media-results-container">
           <ScrollMenu

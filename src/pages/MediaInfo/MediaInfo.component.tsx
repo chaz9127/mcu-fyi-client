@@ -28,7 +28,7 @@ export const MediaInfo = () => {
 
     mediaItem();
     mediaRelated();
-  }, [])
+  }, [slug])
   const relaseDateMilli = media?.releaseDate || 0;
   const releaseDate = new Date(relaseDateMilli);
   const releaseYear = releaseDate.getFullYear();

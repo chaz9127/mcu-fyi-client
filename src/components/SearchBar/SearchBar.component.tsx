@@ -51,7 +51,7 @@ export const SearchBar = (props: SearchBarProps) => {
                   <li
                     className='result-selection'
                     key={result.name}
-                    onClick={() => window.location.href = `/media/${result.name}`}
+                    onClick={() => window.location.href = `/media/${result.slug}`}
                   >
                     {result.name}
                   </li>

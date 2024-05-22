@@ -95,7 +95,7 @@
           color: #F0131E;
         }
 
-        &:hover {
+        &:hover:not(.logo-item) {
           background-color: #363636;
         }
       }

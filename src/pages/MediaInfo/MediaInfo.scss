@@ -2,7 +2,7 @@
 @import '../../styles/variables.scss';
 
 .media-info-container {
-  padding: 35px;
+  padding: 0 35px;
   display: flex;
   color: white;
   max-width: $maxWidth;
@@ -28,6 +28,7 @@
   .media-info-details {
     display: flex;
     flex-direction: column;
+    width: calc(100% - 250px); // minus width of media-info-image-container
 
     .media-info-metadata {
       font-weight: bold;
@@ -87,6 +88,10 @@
       width: 100%;
       max-width: 450px;
       text-align: center;
+    }
+
+    .media-info-details {
+      width: 100%;
     }
 
     .media-info-button-container {
