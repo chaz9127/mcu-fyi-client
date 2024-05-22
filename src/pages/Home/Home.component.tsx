@@ -41,8 +41,8 @@ export const Home = () => {
       } else {
         return 0;
       }
-    } else {
-      return a['releaseDate'] - b['releaseDate'];
+    } else if (sortByValue === 'releaseDate' || sortByValue === 'chronologicalOrder') {
+      return a[sortByValue] - b[sortByValue];
     }
     
   }
@@ -74,6 +74,7 @@ export const Home = () => {
           <label>Sort By:</label>
           <select className="select-menu" onChange={setSort}>
             <option value='releaseDate'>Release Date</option>
+            <option value='chronologicalOrder'>Chronologically</option>
             <option value='name'>Title</option>
           </select>
         </div>
