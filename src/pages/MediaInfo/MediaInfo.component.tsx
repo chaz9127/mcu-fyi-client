@@ -8,6 +8,7 @@ import { Media } from '../../types';
 import { MediaRow } from '../../components/MediaRow/MediaRow.component';
 import { Button } from '../../components/Button/Button.component';
 import { Nav } from '../../components/Nav/Nav.component';
+import { HasWatched } from '../../components/HasWatched/HasWatched.component';
 
 export const MediaInfo = () => {
   const { slug } = useParams();
@@ -53,6 +54,7 @@ export const MediaInfo = () => {
               secondary
             />
           </div>
+          <HasWatched slug={media?.slug || ''} name={media?.name || ''}/>
         </div>
         <div className="media-info-details">
           <h1 className="desktop-only media-info-title">{media?.name}</h1>
