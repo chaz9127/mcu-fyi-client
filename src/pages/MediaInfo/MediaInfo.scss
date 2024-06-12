@@ -2,11 +2,11 @@
 @import '../../styles/variables.scss';
 
 .media-info-container {
-  padding: 0 35px;
+  padding: 0 32px;
   display: flex;
-  color: white;
+  color: #ffffff;
   max-width: $maxWidth;
-  margin: 0 auto;
+  margin: 32px auto 0;
   box-sizing: border-box;
 
   .media-info-title {

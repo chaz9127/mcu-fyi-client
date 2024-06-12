@@ -70,15 +70,15 @@ export const Home = () => {
       <Nav />
       <div className="app-container">
         <Featured />
-        <div className="filter-bar">
-          <label>Sort By:</label>
-          <select className="select-menu" onChange={setSort}>
-            <option value='releaseDate'>Release Date</option>
-            <option value='chronologicalOrder'>Chronologically</option>
-            <option value='name'>Title</option>
-          </select>
-        </div>
         <div className="app-content">
+          <div className="filter-bar">
+            <label>Sort By:</label>
+            <select className="select-menu" onChange={setSort}>
+              <option value='releaseDate'>Release Date</option>
+              <option value='chronologicalOrder'>Chronologically</option>
+              <option value='name'>Title</option>
+            </select>
+          </div>
           {mediaCollection.map((media: MediaType, idx: number) => {
               return (
                 <div className="media-container" key={idx}>
