@@ -10,7 +10,7 @@ export const Feedback = () => {
             <div className="feedback-page-container">
                 <form
                     onClick={(e) => {e.stopPropagation()}}
-                    action="https://formsubmit.co/chasanid@gmail.com" 
+                    action="https://formsubmit.co/themcufyi@gmail.com" 
                     method="POST"
                     className="feedback-form"
                 >
