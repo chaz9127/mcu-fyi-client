@@ -32,35 +32,49 @@ export const MediaInfo = () => {
   const relaseDateMilli = media?.releaseDate || 0;
   const releaseDate = new Date(relaseDateMilli);
   const releaseYear = releaseDate.getFullYear();
+  const getName = () => {
+    let name = media?.name;
+    if (media?.season) {
+      name += ` - Season ${media.season}`
+    }
+
+    return name || '';
+  }
    
   return (
     <>
       <Nav />
       <div className="media-info-container">
         <div className="media-info-image-container">
-          <img className="media-info-image" alt={`poster of ${media?.name}`} src={media?.poster} />
+          <img className="media-info-image" alt={`poster of ${getName()}`} src={media?.poster} />
           <div className="mobile-only">
-            <h1 className="media-info-title">{media?.name}</h1> <span className="media-info-divider">|</span> <span className="media-info-metadata-item">{releaseYear}</span>
+            <h1 className="media-info-title">{getName()}</h1> <span className="media-info-divider">|</span> <span className="media-info-metadata-item">{releaseYear}</span>
           </div>
           <div className="media-info-button-container">
-            <Button 
-              url={media?.playLink || ''}
-              text="Watch Now"
-              imgUrl={`${import.meta.env.VITE_CLIENT_URL}/images/logos/DisneyPlus.png`}
-            />
-            <Button 
-              url={media?.trailerLink || ''}
-              text="Watch Trailer"
-              secondary
-            />
+            {media?.playLink && 
+              <Button 
+                url={media.playLink}
+                text="Watch Now"
+                imgUrl={`${import.meta.env.VITE_CLIENT_URL}/images/logos/DisneyPlus.png`}
+              />
+            }
+            {media?.trailerLink && 
+              <Button 
+                url={media.trailerLink}
+                text="Watch Trailer"
+                secondary
+              />
+            }
           </div>
-          <HasWatched slug={media?.slug || ''} name={media?.name || ''}/>
+          <HasWatched slug={media?.slug || ''} name={getName() || ''}/>
         </div>
         <div className="media-info-details">
-          <h1 className="desktop-only media-info-title">{media?.name}</h1>
+          <h1 className="desktop-only media-info-title">{getName()}</h1>
           <div className="desktop-only media-info-metadata">
             <span className="media-info-metadata-item">{releaseYear}</span>
-            <span className="media-info-metadata-item">{media?.duration}</span>
+            { media?.duration && 
+             <span className="media-info-metadata-item">{media?.duration}</span>
+            }
           </div>
           <div className="media-info-block">
             <strong className="media-info-block-title-container">

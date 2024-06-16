@@ -33,6 +33,11 @@
     .media-info-metadata {
       font-weight: bold;
       margin-bottom: 48px;
+
+      .media-info-metadata-item:nth-child(even):before {
+        content: "|";
+        padding: 0 8px;
+      }
     }
 
     .media-info-block {
@@ -107,6 +112,6 @@
     font-size: 1em;
     display: inline-block;
     position: relative;
-    top: -3px
+    top: -3px;
   }
 }

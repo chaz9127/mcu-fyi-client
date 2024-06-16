@@ -51,7 +51,7 @@ export const Nav = () => {
       }
       
     }
-  }, [localAccessToken, dispatch, noCurrentUser, loginWithToken])
+  }, [localAccessToken, dispatch, noCurrentUser, loginWithToken]);
 
   useEffect(() => {
     try {

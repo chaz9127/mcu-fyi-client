@@ -22,6 +22,15 @@ export const SearchBar = (props: SearchBarProps) => {
     }
   }
 
+  const getName = (media: SearchResult) => {
+    let name = media.name;
+    if (media.season) {
+      name += ` - Season ${media.season}`
+    }
+
+    return name;
+  }
+
   useEffect(() => {
     document.getElementsByTagName('html')[0].addEventListener('click', hideResults, true);
 
@@ -50,10 +59,10 @@ export const SearchBar = (props: SearchBarProps) => {
                 return(
                   <li
                     className='result-selection'
-                    key={result.name}
+                    key={result._id}
                     onClick={() => window.location.href = `/media/${result.slug}`}
                   >
-                    {result.name}
+                    {getName(result)}
                   </li>
                 )
               })
