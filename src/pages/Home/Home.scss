@@ -43,19 +43,36 @@ ul {
 
 .filter-bar {
   width: 100%;
-  label {
-    color: $secondaryText;
-    display: inline-block;
-    margin-right: 12px;
-  }
-  .select-menu {
-    width: 150px;
-    height: 2rem;
-    background-color: #fff;
-    border: 1px solid #caced1;
-    border-radius: 0.25rem;
-    color: #000;
-    cursor: pointer;
+  display: flex;
+  gap: 16px;
+  .filter-bar-item {
+    display: flex;
+    align-items: center;
+    label {
+      color: $secondaryText;
+      display: inline-block;
+      margin-right: 12px;
+    }
+    .select-menu {
+      width: 150px;
+      height: 2rem;
+      background-color: $backgroundWhite;
+      border: 1px solid #caced1;
+      border-radius: 0.25rem;
+      color: #000;
+      cursor: pointer;
+    }
+    .radio-menu-dropdown {
+      display: inline-block;
+      // background-color: $backgroundWhite;
+      .radio-menu-item {
+        display: inline-block;
+        label {
+          // color: $textBlack;
+        }
+        
+      }
+    }
   }
 }
 
