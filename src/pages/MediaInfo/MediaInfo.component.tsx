@@ -40,6 +40,27 @@ export const MediaInfo = () => {
 
     return name || '';
   }
+
+  const displayMediaInfoButtons = () => {
+    return (
+      <>
+        {media?.playLink && 
+          <Button 
+            url={media.playLink}
+            text="Watch Now"
+            imgUrl={`${import.meta.env.VITE_CLIENT_URL}/images/logos/DisneyPlus.png`}
+          />
+        }
+        {media?.trailerLink && 
+          <Button 
+            url={media.trailerLink}
+            text="Watch Trailer"
+            secondary
+          />
+        }
+      </>
+    )
+  }
    
   return (
     <>
@@ -50,23 +71,13 @@ export const MediaInfo = () => {
           <div className="mobile-only">
             <h1 className="media-info-title">{getName()}</h1> <span className="media-info-divider">|</span> <span className="media-info-metadata-item">{releaseYear}</span>
           </div>
-          <div className="media-info-button-container">
-            {media?.playLink && 
-              <Button 
-                url={media.playLink}
-                text="Watch Now"
-                imgUrl={`${import.meta.env.VITE_CLIENT_URL}/images/logos/DisneyPlus.png`}
-              />
-            }
-            {media?.trailerLink && 
-              <Button 
-                url={media.trailerLink}
-                text="Watch Trailer"
-                secondary
-              />
-            }
-          </div>
           <HasWatched slug={media?.slug || ''} name={getName() || ''}/>
+          <div className="media-info-button-container desktop-only">
+            {displayMediaInfoButtons()} 
+          </div>
+        </div>
+        <div className="media-info-button-container mobile-only">
+          {displayMediaInfoButtons()}
         </div>
         <div className="media-info-details">
           <h1 className="desktop-only media-info-title">{getName()}</h1>
