@@ -20,6 +20,7 @@ export const Auth = () => {
     const emailRef = useRef<HTMLInputElement>(null);
     const confirmPasswordRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
+    const [loading, setLoading] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string[]>([]);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -67,6 +68,7 @@ export const Auth = () => {
 
     const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setLoading(true)
         if (isFormValid() && isRegisterState()) {
             try {
                 const userData = await register({email, password}).unwrap();
@@ -98,6 +100,7 @@ export const Auth = () => {
                 }
             }
         }
+        setLoading(false)
     }
 
     const displayErrors = () => {
@@ -150,9 +153,9 @@ export const Auth = () => {
                     <div className="auth-form-input-container">
                         <Button
                             buttonType="submit"
-                            text="Submit"
+                            text={loading ? 'Submitting...' : "Submit"}
                             textOnly={true}
-                            disabled={!isFormValid()}
+                            disabled={!isFormValid() || loading}
                         />
                     </div>
                     <input type="hidden" name="_captcha" value="false" />

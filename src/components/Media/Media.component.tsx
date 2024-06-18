@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { Media as MediaType } from '../../types';
 import './Media.component.scss';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip } from 'react-tooltip'
 import { HasWatched } from "../HasWatched/HasWatched.component";
 
 type MediaProps = {
@@ -23,6 +25,7 @@ export const Media = (props: MediaProps) => {
             <div className="inner-boxshadow">
             </div>
             <HasWatched slug={slug} name={name} />
+            <Tooltip id={`${slug}-watched-icon`} />
         </div>
     )
 }

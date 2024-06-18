@@ -5,11 +5,12 @@ import type { AppDispatch } from '../../features/store';
 import  { selectCurrentUser, updateUser as updateUserAction } from '../../features/authSlice';
 import './HasWatched.component.scss';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
 import 'react-toastify/dist/ReactToastify.css';
 
 type HasWatchedProps = {
-    name: String,
-    slug: String,
+    name: string,
+    slug: string,
 }
 
 export const HasWatched = (props: HasWatchedProps) => {
@@ -19,6 +20,7 @@ export const HasWatched = (props: HasWatchedProps) => {
     const hasUser = Object.keys(currentUser || {}).length > 0;
     const hasWatched = !!(currentUser?.watched?.find( (item: string) => item === slug));
     const localAccessToken = localStorage.getItem('accessToken') || '';
+    const navigate = useNavigate();
 
     const toggleWatch = async () => {
         const {email, role, watched} = currentUser;
@@ -47,14 +49,43 @@ export const HasWatched = (props: HasWatchedProps) => {
         }
     };
 
-    if (!hasUser) return '';
+    const goToAuthenticate = () => {
+        navigate('/auth');
+    }
 
-    return (
-        <div className="watched-banner" onClick={toggleWatch}>
-            {hasWatched
-                ? <i className="fa-solid fa-check"></i>
-                : <i className="fa-regular fa-eye-slash"></i>
-            }
-        </div>
-    )
+    if (hasUser) {
+        return (
+            <>
+                <div className="watched-banner" onClick={toggleWatch}>
+                    {hasWatched
+                        ? <i
+                            className="fa-solid fa-check"
+                            data-tooltip-id={`${slug}-watched-icon`} 
+                            data-tooltip-content="Remove from watched"
+                            data-tooltip-place="top"
+                        ></i>
+                        : <i
+                            className="fa-regular fa-eye-slash"    
+                            data-tooltip-id={`${slug}-watched-icon`} 
+                            data-tooltip-content="Add to watched"
+                            data-tooltip-place="top"
+                        ></i>
+                    }
+                </div>
+            </>
+        )
+    } else {
+        return (
+            <>
+                <div className="watched-banner" onClick={goToAuthenticate}>
+                    <i
+                        className="fa-regular fa-eye-slash"
+                        data-tooltip-id={`${slug}-watched-icon`} 
+                        data-tooltip-content="Login or Register to Add"
+                        data-tooltip-place="top"
+                    ></i>
+                </div>
+            </>
+        )
+    }
 }

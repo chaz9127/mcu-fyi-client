@@ -1,18 +1,20 @@
+import { useState } from 'react';
 import './Feedback.component.scss'
 import { Button } from '../../components/Button/Button.component';
 import { Nav } from '../../components/Nav/Nav.component';
 
 export const Feedback = () => {
-    console.log(`${import.meta.env.VITE_CLIENT_URL}/?submittedFeedback=true`)
+    const [loading, setLoading] = useState(false);
     return (
         <>
             <Nav />
             <div className="feedback-page-container">
                 <form
                     onClick={(e) => {e.stopPropagation()}}
-                    action="https://formsubmit.co/themcufyi@gmail.com" 
+                    action={`https://formsubmit.co/${import.meta.env.VITE_FORMSUBMIT_EMAIL_ID}`}
                     method="POST"
                     className="feedback-form"
+                    onSubmit={() => {setLoading(true)}}
                 >
                     <h1 className="feedback-page-title">Send us feedback.</h1>
                     <div className="feedback-form-input-container">
@@ -26,8 +28,9 @@ export const Feedback = () => {
                     <div className="feedback-form-input-container">
                         <Button
                             buttonType="submit"
-                            text="Send"
+                            text={loading ? 'Sending...': 'Send'}
                             textOnly={true}
+                            disabled={loading}
                         />
                     </div>
                     <input type="hidden" name="_subject" value={`Message from TheMCU.FYI`} />
