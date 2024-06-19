@@ -41,6 +41,10 @@ export const MediaInfo = () => {
     return name || '';
   }
 
+  const hasFutureReleaseDate = () => {
+      return Date.parse(Date())-(media?.releaseDate || 0) < 0; //Negative number means it is in the future
+  }
+
   const displayMediaInfoButtons = () => {
     return (
       <>
@@ -67,11 +71,11 @@ export const MediaInfo = () => {
       <Nav />
       <div className="media-info-container">
         <div className="media-info-image-container">
-          <img className="media-info-image" alt={`poster of ${getName()}`} src={media?.poster} />
+          <img className="media-info-image" alt={`poster of ${getName()}`} title={`${getName()}`} src={media?.poster} />
           <div className="mobile-only">
             <h1 className="media-info-title">{getName()}</h1> <span className="media-info-divider">|</span> <span className="media-info-metadata-item">{releaseYear}</span>
           </div>
-          <HasWatched slug={media?.slug || ''} name={getName() || ''}/>
+          { !hasFutureReleaseDate() && <HasWatched slug={media?.slug || ''} name={getName() || ''}/>}
           <div className="media-info-button-container desktop-only">
             {displayMediaInfoButtons()} 
           </div>

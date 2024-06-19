@@ -11,7 +11,12 @@ type MediaProps = {
 }
 
 export const Media = (props: MediaProps) => {
-    const {name, slug, poster, season, type} = props.media;
+    const {name, slug, poster, season, type, releaseDate} = props.media;
+    
+    const hasFutureReleaseDate = () => {
+        return Date.parse(Date())-releaseDate < 0; //Negative number means it is in the future
+    }
+
     return (
         <div title={name} className="media">
             <Link to={`/media/${slug}`}>
@@ -24,7 +29,7 @@ export const Media = (props: MediaProps) => {
             </Link>
             <div className="inner-boxshadow">
             </div>
-            <HasWatched slug={slug} name={name} />
+            {!hasFutureReleaseDate() && <HasWatched slug={slug} name={name} />}
             <Tooltip id={`${slug}-watched-icon`} />
         </div>
     )

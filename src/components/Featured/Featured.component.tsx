@@ -4,11 +4,11 @@ import { Button } from '../Button/Button.component';
 
 const featuredData = {
   "featured": {
-    "logoImageUrl": "/images/logos/Loki.png",
-    "showTitle": "Loki",
-    "slug": "loki-season-1",
-    "watchUrl": "https://www.disneyplus.com/play/71baacca-74b2-4988-a6de-95ee93b3d784",
-    "watchIconUrl": "/images/logos/DisneyPlus.png"
+    "logoImageUrl": "/images/logos/Deadpool.png",
+    "showTitle": "Deadpool & Wolverine",
+    "slug": "deadpool-and-wolverine",
+    "watchUrl": "https://www.youtube.com/watch?v=73_1biulkYk",
+    "watchIconUrl": "/images/logos/youtube.png"
   }
 }
 
@@ -29,7 +29,7 @@ export const Featured = () => {
             />
             <Button
               url={featuredData.featured.watchUrl}
-              text="Watch Now"
+              text="Watch Trailer"
               imgUrl={`${import.meta.env.VITE_CLIENT_URL}${featuredData.featured.watchIconUrl}`}
               tertiary
             />
