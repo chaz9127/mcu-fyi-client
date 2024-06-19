@@ -60,6 +60,7 @@ export const MediaInfo = () => {
             url={media.trailerLink}
             text="Watch Trailer"
             secondary
+            textOnly
           />
         }
       </>
