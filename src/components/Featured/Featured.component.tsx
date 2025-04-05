@@ -4,10 +4,10 @@ import { Button } from '../Button/Button.component';
 
 const featuredData = {
   "featured": {
-    "logoImageUrl": "/images/logos/Deadpool.png",
-    "showTitle": "Deadpool & Wolverine",
-    "slug": "deadpool-and-wolverine",
-    "watchUrl": "https://www.youtube.com/watch?v=73_1biulkYk",
+    "logoImageUrl": "/images/logos/braveNewWorld.webp",
+    "showTitle": "Captain America: Brave New World",
+    "slug": "captain-america-brave-new-world",
+    "watchUrl": "https://www.youtube.com/watch?v=1pHDWnXmK7Y&ab_channel=MarvelEntertainment",
     "watchIconUrl": "/images/logos/youtube.png"
   }
 }
