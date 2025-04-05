@@ -4,4 +4,6 @@ export type Featured = {
   watchUrl: string,
   watchIconUrl: string,
   name: string,
+  ticketsUrl?: string,
+  ticketsLogo?: string,
 }
