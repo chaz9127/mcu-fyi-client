@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -l /c/Users/CJ/Desktop/Repos/mcu-fyi-client/src/**/*.tsx /c/Users/CJ/Desktop/Repos/mcu-fyi-client/src/**/*.ts)",
+      "Bash(ls c:/Users/CJ/Desktop/Repos/mcu-fyi-client/.env*)",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)"
+    ]
+  }
+}
