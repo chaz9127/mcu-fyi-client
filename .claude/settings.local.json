@@ -4,7 +4,25 @@
       "Bash(wc -l /c/Users/CJ/Desktop/Repos/mcu-fyi-client/src/**/*.tsx /c/Users/CJ/Desktop/Repos/mcu-fyi-client/src/**/*.ts)",
       "Bash(ls c:/Users/CJ/Desktop/Repos/mcu-fyi-client/.env*)",
       "Bash(npm install:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(ls c:/Users/CJ/Desktop/Repos/mcu-fyi-client/.eslint*)",
+      "Bash(ls c:/Users/CJ/Desktop/Repos/mcu-fyi-client/eslint*)",
+      "Skill(update-config)",
+      "Skill(update-config:*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{const o=JSON.parse(d);const f=o.tool_input&&o.tool_input.file_path;if(f&&/\\.(tsx?)$/.test(f)){require('child_process').execSync('npx prettier --write '+JSON.stringify(f),{stdio:'inherit'})}}catch(e){}})\"",
+            "statusMessage": "Formatting with Prettier..."
+          }
+        ]
+      }
     ]
   }
 }

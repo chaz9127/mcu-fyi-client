@@ -1,50 +1,50 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import Button from '@/components/Button'
+import { useState } from "react";
+import Button from "@/components/Button";
 
 export default function FeedbackPage() {
-  const [loading, setLoading] = useState(false)
-  const formsubmitId = process.env.NEXT_PUBLIC_FORMSUBMIT_EMAIL_ID
-  const clientUrl = process.env.NEXT_PUBLIC_CLIENT_URL ?? ''
+  const [loading, setLoading] = useState(false);
+  const formsubmitId = process.env.NEXT_PUBLIC_FORMSUBMIT_EMAIL_ID;
+  const clientUrl = process.env.NEXT_PUBLIC_CLIENT_URL ?? "";
 
   return (
-    <div className="flex justify-center items-center h-[calc(100vh-60px)]">
+    <div className="flex h-[calc(100vh-60px)] items-center justify-center">
       <form
         onClick={(e) => e.stopPropagation()}
         action={`https://formsubmit.co/${formsubmitId}`}
         method="POST"
         onSubmit={() => setLoading(true)}
-        className="w-full max-w-[440px] text-white px-8 relative -top-20"
+        className="relative -top-20 w-full max-w-[440px] px-8"
       >
-        <h1 className="text-3xl font-bold mb-12">Send us feedback.</h1>
+        <h1 className="mb-12 text-3xl font-bold">Send us feedback.</h1>
 
         <div className="relative mb-6">
-          <label className="absolute -top-3 left-3 bg-mcu-bg px-1 text-gray-400 text-sm">
+          <label className="absolute -top-3 left-3 bg-mcu-bg px-1 text-sm text-gray-400">
             Email (optional)
           </label>
           <input
             name="email"
             type="text"
-            className="bg-transparent border border-gray-500 rounded text-base h-16 leading-8 font-bold text-white px-3 w-full"
+            className="h-16 w-full rounded border border-gray-500 bg-transparent px-3 text-base font-bold leading-8"
           />
         </div>
 
         <div className="relative mb-6">
-          <label className="absolute -top-3 left-3 bg-mcu-bg px-1 text-gray-400 text-sm">
+          <label className="absolute -top-3 left-3 bg-mcu-bg px-1 text-sm text-gray-400">
             Message
           </label>
           <textarea
             required
             name="feedback-message"
-            className="bg-transparent border border-gray-500 rounded text-base h-32 leading-8 font-bold text-white px-3 w-full resize-none"
+            className="h-32 w-full resize-none rounded border border-gray-500 bg-transparent px-3 text-base font-bold leading-8"
           />
         </div>
 
         <div className="mb-6">
           <Button
             buttonType="submit"
-            text={loading ? 'Sending...' : 'Send'}
+            text={loading ? "Sending..." : "Send"}
             textOnly
             disabled={loading}
           />
@@ -55,5 +55,5 @@ export default function FeedbackPage() {
         <input type="hidden" name="_next" value={`${clientUrl}/?submittedFeedback=true`} />
       </form>
     </div>
-  )
+  );
 }

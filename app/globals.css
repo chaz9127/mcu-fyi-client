@@ -1,14 +1,15 @@
-@import 'react-toastify/dist/ReactToastify.css';
-@import 'react-tooltip/dist/react-tooltip.css';
+@import "react-toastify/dist/ReactToastify.css";
+@import "react-tooltip/dist/react-tooltip.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Avengeance';
-  src: local('Avengeance'),
-    url(/fonts/avengers-webfont/AvengeanceHeroicAvengerBold-MM2J.woff) format('woff');
+  font-family: "Avengeance";
+  src:
+    local("Avengeance"),
+    url(/fonts/avengers-webfont/AvengeanceHeroicAvengerBold-MM2J.woff) format("woff");
 }
 
 * {
@@ -17,18 +18,18 @@
 
 body {
   margin: 0;
-  background-color: #1a1a1a;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #1a1a1a;
 }
 
 ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
-  color: white;
 }
 
 /* Logo skew badge — hard to replicate with Tailwind alone */
@@ -37,7 +38,7 @@ ul {
   cursor: pointer;
 }
 .logo-badge::after {
-  content: '';
+  content: "";
   position: absolute;
   display: block;
   width: calc(100% + 30px);

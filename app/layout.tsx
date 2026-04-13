@@ -1,19 +1,21 @@
-import type { Metadata } from 'next'
-import Script from 'next/script'
-import { ToastContainer } from 'react-toastify'
-import { AuthProvider } from '@/lib/auth-context'
-import Nav from '@/components/Nav'
-import './globals.css'
+import type { Metadata } from "next";
+import Script from "next/script";
+import { ToastContainer } from "react-toastify";
+import { AuthProvider } from "@/lib/auth-context";
+import { fetchApi } from "@/lib/api";
+import Nav from "@/components/Nav";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: 'TheMCU.FYI',
-  description: 'Track your Marvel Cinematic Universe watchlist',
-  icons: { icon: '/images/favicon.png' },
-}
+  title: "TheMCU.FYI",
+  description: "Track your Marvel Cinematic Universe watchlist",
+  icons: { icon: "/images/favicon.png" },
+};
 
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const searchPool = await fetchApi("/media").catch(() => []);
   return (
     <html lang="en">
       <head>
@@ -43,13 +45,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body>
+      <body className="bg-mcu-bg">
         <AuthProvider>
-          <Nav />
+          <Nav searchPool={searchPool} />
           {children}
         </AuthProvider>
         <ToastContainer theme="dark" />
       </body>
     </html>
-  )
+  );
 }

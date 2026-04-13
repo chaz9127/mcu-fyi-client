@@ -1,55 +1,57 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { SearchResult } from '@/types'
+import { useState, useEffect, useRef } from "react";
+import { SearchResult } from "@/types";
 
 type SearchBarProps = {
-  results: SearchResult[]
-}
+  results: SearchResult[];
+};
 
 export default function SearchBar({ results }: SearchBarProps) {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [showResults, setShowResults] = useState(false)
-
-  const hideResults = (e: Event) => {
-    const ignoreClasses = ['result-selection', 'searchbar-input']
-    const target = (e.target as HTMLElement).className
-    if (!ignoreClasses.some((c) => c === target)) {
-      setShowResults(false)
-    }
-  }
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showResults, setShowResults] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    document.documentElement.addEventListener('click', hideResults, true)
-    return () => document.documentElement.removeEventListener('click', hideResults, true)
-  }, [])
+    const hideResults = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setShowResults(false);
+      }
+    };
+    document.documentElement.addEventListener("click", hideResults, true);
+    return () => document.documentElement.removeEventListener("click", hideResults, true);
+  }, []);
 
   const getName = (media: SearchResult) => {
-    let name = media.name
-    if (media.season) name += ` - Season ${media.season}`
-    return name
-  }
+    let name = media.name;
+    if (media.season) name += ` - Season ${media.season}`;
+    return name;
+  };
 
   const filtered = results.filter((term) => {
-    const searchResult = term?.name?.toLowerCase()
-    return !!searchTerm && searchResult?.includes(searchTerm)
-  })
-
+    const searchResult = term?.name?.toLowerCase();
+    return !!searchTerm && searchResult?.includes(searchTerm);
+  });
+  console.log("showResults = ", showResults);
   return (
-    <div className="w-full max-w-[30em] h-[30px] border-2 border-[#393939] rounded-[5px] focus-within:border-white relative">
-      <i className="fa-solid fa-magnifying-glass ml-4 text-white"></i>
+    <div
+      ref={containerRef}
+      className="relative h-10 w-full max-w-[30em] rounded-[5px] border-2 border-[#393939] focus-within:border-white"
+    >
+      <i className="fa-solid fa-magnifying-glass ml-4"></i>
       <input
         type="search"
-        className="searchbar-input h-full w-[calc(100%-48px)] border-none bg-transparent outline-none text-white text-base font-bold"
+        placeholder="Whatcha wanna watch?"
+        className="searchbar-input h-full w-[calc(100%-48px)] border-none bg-transparent ps-4 text-base font-bold outline-none"
         onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
         onFocus={() => setShowResults(true)}
       />
       {showResults && filtered.length > 0 && (
-        <div className="absolute bg-nav-bg w-full top-[40px] rounded z-[2]">
+        <div className="absolute top-[40px] z-[2] w-full rounded bg-nav-bg">
           <ul>
             {filtered.map((result) => (
               <li
-                className="result-selection px-6 py-4 cursor-pointer font-bold hover:bg-hover-bg"
+                className="result-selection cursor-pointer px-6 py-4 font-bold hover:bg-hover-bg"
                 key={result._id}
                 onClick={() => (window.location.href = `/media/${result.slug}`)}
               >
@@ -60,5 +62,5 @@ export default function SearchBar({ results }: SearchBarProps) {
         </div>
       )}
     </div>
-  )
+  );
 }
