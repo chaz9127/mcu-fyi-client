@@ -54,6 +54,9 @@ ul {
 .react-horizontal-scrolling-menu--scroll-container {
   overflow: hidden;
 }
+.react-horizontal-scrolling-menu--item {
+  flex-shrink: 0;
+}
 .react-horizontal-scrolling-menu--arrow-left {
   font-size: 36px;
   position: absolute;

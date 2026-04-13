@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -34,7 +35,7 @@ export default function Button(props: ButtonProps) {
 
   const handleClick = (ev: React.MouseEvent) => {
     if (url) {
-      window.location.href = url;
+      window.open(url, "_blank");
     } else if (callback) {
       callback(ev);
     }
@@ -45,8 +46,8 @@ export default function Button(props: ButtonProps) {
   const primary = "bg-mcu-red hover:bg-mcu-red/70";
   const secondaryClass =
     "border-2 border-mcu-red/70 hover:border-mcu-red/40 justify-center text-mcu-text";
-  const tertiaryClass = "bg-[#1a1a1a] hover:bg-[#292929]";
-  const disabledClass = "bg-mcu-red/10/10 cursor-not-allowed";
+  const tertiaryClass = "bg-button-bg hover:bg-hover-bg";
+  const disabledClass = "bg-mcu-red/10 hover:bg-mcu-red/10 cursor-not-allowed";
   const textOnlyClass = "justify-around";
 
   const className = twMerge(
@@ -71,9 +72,13 @@ export default function Button(props: ButtonProps) {
         </span>
       )}
       {imgUrl && (
-        <span>
-          <img className="h-10 w-10 rounded-full" src={imgUrl} alt={text} />
-        </span>
+        <Image
+          className="h-[40px] w-[40px] rounded-full"
+          src={imgUrl}
+          alt={text}
+          width={40}
+          height={40}
+        />
       )}
       <span className={iconClass || imgUrl ? "ml-2.5" : ""}>{text}</span>
     </button>

@@ -11,6 +11,7 @@ const config: Config = {
         "mcu-text": "#1a1a1a",
         "hover-bg": "#363636",
         "mcu-border": "#363636",
+        "button-bg": "#1a1a1a",
       },
       fontFamily: {
         avengeance: ["Avengeance", "sans-serif"],

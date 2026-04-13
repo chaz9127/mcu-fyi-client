@@ -18,7 +18,7 @@ export default function MediaRow({ mediaList, title = "" }: MediaRowProps) {
       <div>
         <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
           {mediaList.map((media, idx) => (
-            <div key={idx} className="mr-4">
+            <div key={idx} className="mr-4 shrink-0">
               <Media media={media} />
             </div>
           ))}

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { fetchApi } from "@/lib/api";
 import { Media } from "@/types";
 import MediaRow from "@/components/MediaRow";
@@ -30,21 +31,21 @@ export default async function MediaInfoPage({ params }: Props) {
     return name;
   };
 
-  const clientUrl = process.env.NEXT_PUBLIC_CLIENT_URL ?? "";
-
   return (
     <div className="mx-auto mt-8 box-border flex max-w-content px-8 max-md:mt-4 max-md:w-full max-md:flex-col">
       {/* Left column — poster */}
       <div className="relative mr-6 w-[250px] max-md:mx-auto max-md:text-center">
-        <img
-          className="mb-4 w-[250px] rounded"
+        <Image
+          className="w-[250px] rounded md:mb-4"
           alt={`poster of ${getName()}`}
           title={getName()}
-          src={media?.poster}
+          src={media?.poster ?? ""}
+          width={250}
+          height={375}
         />
         {/* Mobile title */}
-        <div className="md:hidden">
-          <h1 className="inline text-[36px]">{getName()}</h1>
+        <div className="mb-4 md:hidden">
+          <h1 className="inline text-xl font-bold">{getName()}</h1>
           <span className="mx-2 inline-block text-[2em]">|</span>
           <span className="text-base font-bold">{releaseYear}</span>
         </div>
@@ -54,11 +55,7 @@ export default async function MediaInfoPage({ params }: Props) {
         {/* Desktop buttons */}
         <div className="hidden flex-col md:flex">
           {media?.playLink && (
-            <Button
-              url={media.playLink}
-              text="Watch Now"
-              imgUrl={`${clientUrl}/images/logos/DisneyPlus.png`}
-            />
+            <Button url={media.playLink} text="Watch Now" imgUrl="/images/logos/DisneyPlus.png" />
           )}
           {media?.trailerLink && (
             <Button url={media.trailerLink} text="Watch Trailer" secondary textOnly />
@@ -67,13 +64,9 @@ export default async function MediaInfoPage({ params }: Props) {
       </div>
 
       {/* Mobile buttons */}
-      <div className="flex md:hidden">
+      <div className="flex gap-4 md:hidden">
         {media?.playLink && (
-          <Button
-            url={media.playLink}
-            text="Watch Now"
-            imgUrl={`${clientUrl}/images/logos/DisneyPlus.png`}
-          />
+          <Button url={media.playLink} text="Watch Now" imgUrl="/images/logos/DisneyPlus.png" />
         )}
         {media?.trailerLink && (
           <Button url={media.trailerLink} text="Watch Trailer" secondary textOnly />
