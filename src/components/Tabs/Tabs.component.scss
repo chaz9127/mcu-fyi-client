@@ -1,17 +1,32 @@
-@import '../../styles/colors.scss';
-
 .tabs-container {
-    display: flex;
-    justify-content: space-around;
-    .tab {
-        font-size: 32px;
-        width: 100%;
-        text-align: center;
-        cursor: pointer;
+  display: inline-flex;
+  gap: 2px;
+  padding: 4px;
+  background-color: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
 
-        &.active, &:hover {
-            border-bottom: 4px solid $primaryRed;
-            color: $primaryRed;
-        }
+  .tab {
+    flex: 1;
+    height: 36px;
+    padding: 0 16px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--text-secondary);
+    background: none;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+
+    &:hover {
+      color: var(--text);
     }
+
+    &.active {
+      color: var(--text);
+      background-color: var(--red-button);
+    }
+  }
 }

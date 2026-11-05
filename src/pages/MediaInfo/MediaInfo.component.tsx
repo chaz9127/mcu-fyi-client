@@ -7,8 +7,11 @@ import { useLayoutEffect, useState } from 'react';
 import { Media } from '../../types';
 import { MediaRow } from '../../components/MediaRow/MediaRow.component';
 import { Button } from '../../components/Button/Button.component';
+import { TrailerButton } from '../../components/TrailerButton/TrailerButton.component';
 import { Nav } from '../../components/Nav/Nav.component';
 import { HasWatched } from '../../components/HasWatched/HasWatched.component';
+import { Tooltip } from 'react-tooltip';
+import { Poster } from '../../components/Poster/Poster.component';
 
 export const MediaInfo = () => {
   const { slug } = useParams();
@@ -46,8 +49,10 @@ export const MediaInfo = () => {
   }
 
   const displayMediaInfoButtons = () => {
+    if (!media?.playLink && !media?.trailerLink) return null;
+
     return (
-      <>
+      <div className="media-info-button-container">
         {media?.playLink && 
           <Button 
             url={media.playLink}
@@ -56,61 +61,71 @@ export const MediaInfo = () => {
           />
         }
         {media?.trailerLink && 
-          <Button 
+          <TrailerButton
             url={media.trailerLink}
-            text="Watch Trailer"
+            title={getName()}
+            iconClass="fa-solid fa-play"
             secondary
-            textOnly
           />
         }
-      </>
+      </div>
     )
   }
    
   return (
     <>
       <Nav />
-      <div className="media-info-container">
-        <div className="media-info-image-container">
-          <img className="media-info-image" alt={`poster of ${getName()}`} title={`${getName()}`} src={media?.poster} />
-          <div className="mobile-only">
-            <h1 className="media-info-title">{getName()}</h1> <span className="media-info-divider">|</span> <span className="media-info-metadata-item">{releaseYear}</span>
-          </div>
-          { !hasFutureReleaseDate() && <HasWatched slug={media?.slug || ''} name={getName() || ''}/>}
-          <div className="media-info-button-container desktop-only">
-            {displayMediaInfoButtons()} 
-          </div>
-        </div>
-        <div className="media-info-button-container mobile-only">
-          {displayMediaInfoButtons()}
-        </div>
-        <div className="media-info-details">
-          <h1 className="desktop-only media-info-title">{getName()}</h1>
-          <div className="desktop-only media-info-metadata">
-            <span className="media-info-metadata-item">{releaseYear}</span>
-            { media?.duration && 
-             <span className="media-info-metadata-item">{media?.duration}</span>
+      <div className="media-info-page">
+        {media && (
+          <div
+            className="media-info-backdrop"
+            aria-hidden="true"
+            style={{ '--backdrop-image': `url("${media.poster}")` } as React.CSSProperties}
+          ></div>
+        )}
+        <main className="media-info-container">
+          <div className="media-info-image-container">
+            {media
+              ? <Poster className="media-info-image" src={media.poster} name={media.name} alt={`poster of ${getName()}`} width={640} />
+              : <div className="media-info-image skeleton"></div>
             }
+            {media && !hasFutureReleaseDate() && (
+              <>
+                <HasWatched slug={media.slug} name={getName()}/>
+                <Tooltip id={`${media.slug}-watched-icon`} />
+              </>
+            )}
           </div>
-          <div className="media-info-block">
-            <strong className="media-info-block-title-container">
-              <span className="media-info-block-title">Synopsis</span>
-            </strong>
-            <p className="media-info-block-content">
-              {media?.description}
-            </p>
-          </div>
-          {relatedMedia.length > 0 && (
-            <div className="media-info-block">
-              <strong className="media-info-block-title-container">
-                <span className="media-info-block-title">What to watch first:</span>
-              </strong>
+          {media ? (
+            <div className="media-info-details">
+              <div className="media-info-metadata">
+                <span className="media-info-metadata-item">{media.type || 'Movie'}</span>
+                {media.season && <span className="media-info-metadata-item">Season {media.season}</span>}
+                <span className="media-info-metadata-item">{releaseYear}</span>
+                {media.duration && <span className="media-info-metadata-item">{media.duration}</span>}
+              </div>
+              <h1 className="media-info-title">{media.name}</h1>
+              {displayMediaInfoButtons()}
+              <section className="media-info-block">
+                <h2 className="eyebrow media-info-block-title">Synopsis</h2>
+                <p className="media-info-block-content">
+                  {media.description}
+                </p>
+              </section>
               {relatedMedia.length > 0 && (
-                <MediaRow mediaList={relatedMedia} />
+                <section className="media-info-block">
+                  <h2 className="eyebrow media-info-block-title">What to watch first</h2>
+                  <MediaRow mediaList={relatedMedia} />
+                </section>
               )}
             </div>
+          ) : (
+            <div className="media-info-details">
+              <div className="media-info-placeholder is-title skeleton"></div>
+              <div className="media-info-placeholder is-text skeleton"></div>
+            </div>
           )}
-        </div>
+        </main>
       </div>
     </>
   )

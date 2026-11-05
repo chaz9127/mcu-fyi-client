@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './Feedback.component.scss'
+import '../../styles/forms.scss'
 import { Button } from '../../components/Button/Button.component';
 import { Nav } from '../../components/Nav/Nav.component';
 
@@ -8,24 +8,26 @@ export const Feedback = () => {
     return (
         <>
             <Nav />
-            <div className="feedback-page-container">
+            <main className="form-page">
                 <form
                     onClick={(e) => {e.stopPropagation()}}
                     action={`https://formsubmit.co/${import.meta.env.VITE_FORMSUBMIT_EMAIL_ID}`}
                     method="POST"
-                    className="feedback-form"
+                    className="form-card"
                     onSubmit={() => {setLoading(true)}}
                 >
-                    <h1 className="feedback-page-title">Send us feedback.</h1>
-                    <div className="feedback-form-input-container">
-                        <label htmlFor="feedback-message" className="feedback-form-label">Email (optional)</label>
-                        <input name="email" className="feedback-form-input" type="text" />
+                    <span className="eyebrow">Feedback</span>
+                    <h1 className="form-title">Send us feedback.</h1>
+                    <p className="form-intro">Spot something wrong or missing? Let us know.</p>
+                    <div className="form-field">
+                        <label htmlFor="feedback-email" className="form-label">Email <span className="form-hint">(optional)</span></label>
+                        <input id="feedback-email" name="email" className="form-input" type="text" />
                     </div>
-                    <div className="feedback-form-input-container">
-                        <label htmlFor="feedback-message" className="feedback-form-label">Message</label>
-                        <textarea required name="feedback-message" className="feedback-form-input"/>
+                    <div className="form-field">
+                        <label htmlFor="feedback-message" className="form-label">Message</label>
+                        <textarea required id="feedback-message" name="feedback-message" className="form-input"/>
                     </div>
-                    <div className="feedback-form-input-container">
+                    <div className="form-actions">
                         <Button
                             buttonType="submit"
                             text={loading ? 'Sending...': 'Send'}
@@ -37,7 +39,7 @@ export const Feedback = () => {
                     <input type="hidden" name="_captcha" value="false" />
                     <input type="hidden" name="_next" value={`${import.meta.env.VITE_CLIENT_URL}/?submittedFeedback=true`} />
                 </form>
-            </div>
+            </main>
         </>
     )
 }

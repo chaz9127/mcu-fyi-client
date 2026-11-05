@@ -1,0 +1,87 @@
+@import '../../styles/mixins.scss';
+
+// Keep the page behind from scrolling while a trailer plays.
+html:has(.trailer-modal[open]) {
+  overflow: hidden;
+}
+
+.trailer-modal {
+  // Limited by height as well as width, so the video still fits on a phone held sideways.
+  width: min(1120px, 100vw - 32px, (100dvh - 96px) * 16 / 9);
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  overflow: visible;
+  color: var(--text);
+  background: none;
+  border: none;
+
+  &[open] {
+    animation: rise-in 0.3s var(--ease) both;
+  }
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.86);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .trailer-modal-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  .trailer-modal-title {
+    @include display;
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    font-size: clamp(20px, 3vw, 30px);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .trailer-modal-link {
+    flex-shrink: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+
+    &:hover {
+      color: var(--text);
+    }
+  }
+
+  .trailer-modal-close {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    color: var(--text);
+    background-color: rgba(255, 255, 255, 0.12);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: var(--red-button);
+    }
+  }
+
+  .trailer-modal-video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: #000;
+    border: none;
+    border-radius: var(--radius);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+  }
+}

@@ -12,10 +12,6 @@ import { Media } from '../../types';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useLoginWithTokenMutation } from '../../features/authApiSlice';
 
-const goTo = (url: string) => {
-  window.location.href = url;
-}
-
 export const Nav = () => {
   const [ showNavMenu, setShowNavMenu ] = useState(false);
   const [ searchPool, setSearchPool ] = useState<Media[]>([]);
@@ -29,8 +25,8 @@ export const Nav = () => {
   
   const switchShowNavMenu = () => {setShowNavMenu(!showNavMenu)};
   const hideShowNavMenu = (ele:Event) => {
-    const clickedMenu = (ele?.target as HTMLElement).classList.value.includes('fa-bars');
-    !clickedMenu && setShowNavMenu(false);
+    const clickedToggle = !!(ele?.target as HTMLElement).closest?.('.nav-toggle');
+    !clickedToggle && setShowNavMenu(false);
   };
 
   useEffect(() => {
@@ -65,9 +61,10 @@ export const Nav = () => {
     }
   }, [state, dispatch, navigate])
   useEffect(() => {
-    document.getElementsByTagName('html')[0].addEventListener('click', hideShowNavMenu, false);
+    const html = document.getElementsByTagName('html')[0];
+    html.addEventListener('click', hideShowNavMenu, false);
 
-    return () => document.getElementsByTagName('body')[0].removeEventListener('click', hideShowNavMenu, false);
+    return () => html.removeEventListener('click', hideShowNavMenu, false);
   }, [])  
 
   useEffect(() => {
@@ -90,7 +87,7 @@ export const Nav = () => {
       return (
         <li className="nav-menu-item">
           <Link to="/" state={{ logout: true }} >
-            <i className="fa-solid fa-user-plus nav-menu-icon"></i>
+            <i className="fa-solid fa-right-from-bracket nav-menu-icon"></i>
             Logout
           </Link>
         </li>
@@ -107,64 +104,68 @@ export const Nav = () => {
     }
   }
 
-  return (
+  const getNavItems = (tooltipPlace: 'bottom' | 'left') => (
     <>
-      <div className="navbar-container">
-        <nav className="navbar navbar-desktop">
-          <div onClick={switchShowNavMenu}><i className="fa-solid fa-bars"></i></div>
-          <div onClick={() => navigate('/')} className="logo">
-            <span>TheMcu.fyi</span>
-          </div>
-          <SearchBar results={searchPool} />
-          <div className="donate">
-            <div id="donate-button">
-              <img
-                className="donate-buttom-img"
-                alt="Donate via Paypal"
-                src='https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif'
-                data-tooltip-id="donate-buttom-img"
-                data-tooltip-content="Coming Soon"
-                data-tooltip-place="bottom"
-              />
-            </div>
-          </div>
-        </nav>
-        <nav className="navbar navbar-mobile">
-          <div onClick={switchShowNavMenu}><i className="fa-solid fa-bars"></i></div>
-          <SearchBar results={searchPool} />
-        </nav>
-        {showNavMenu && <div className="nav-menu">
-          <ul>
-            <li onClick={() => goTo('/')} className="nav-menu-item logo-item">
-              <div className="logo">
-                <span>TheMcu.fyi</span>
-              </div>
-            </li>
-            {getAuthItem()}
-            <li
-              className="nav-menu-item"
-            >
-              <Link to="/feedback">
-                <i className="fa-solid fa-comment-dots nav-menu-icon"></i>
-                Feedback
-              </Link>
-            </li>
-            <li 
-              className="nav-menu-item"
+      <li className="nav-menu-item">
+        <Link to="/feedback">
+          <i className="fa-solid fa-comment-dots nav-menu-icon"></i>
+          Feedback
+        </Link>
+      </li>
+      <li
+        className="nav-menu-item"
+        data-tooltip-id="donate-buttom-img"
+        data-tooltip-content="Coming Soon"
+        data-tooltip-place={tooltipPlace}
+      >
+        <Link to="/">
+          <i className="fa-solid fa-coins nav-menu-icon"></i>
+          Donate
+        </Link>
+      </li>
+      {getAuthItem()}
+    </>
+  );
+
+  return (
+    <header className="navbar-container">
+      <nav className="navbar">
+        <Link to="/" className="logo">
+          <span>TheMcu.fyi</span>
+        </Link>
+        <SearchBar results={searchPool} />
+        <ul className="nav-links">
+          {getNavItems('bottom')}
+        </ul>
+        <button
+          type="button"
+          className="nav-toggle"
+          aria-label="Menu"
+          aria-expanded={showNavMenu}
+          onClick={switchShowNavMenu}
+        >
+          <i className="fa-solid fa-bars"></i>
+        </button>
+        {showNavMenu && (
+          <ul className="nav-menu">
+            {getNavItems('left')}
+          </ul>
+        )}
+        <div className="donate">
+          <div id="donate-button">
+            <img
+              className="donate-buttom-img"
+              alt="Donate via Paypal"
+              src='https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif'
               data-tooltip-id="donate-buttom-img"
               data-tooltip-content="Coming Soon"
-              data-tooltip-place="right"
-            >
-              <Link to="/">
-                <i className="fa-solid fa-coins nav-menu-icon"></i>
-                Donate
-              </Link>
-            </li>
-          </ul>
-        </div>}
-        <Tooltip id="donate-buttom-img" />
-      </div>
-    </>
+              data-tooltip-place="bottom"
+            />
+          </div>
+        </div>
+      </nav>
+      <Tooltip id="donate-buttom-img" />
+    </header>
   )
 }
 

@@ -1,0 +1,15 @@
+// Condensed, heavy, uppercase: the headline voice of the site.
+@mixin display {
+  font-stretch: 75%;
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 0.98;
+  letter-spacing: 0.005em;
+}
+
+// Frosted panel used for anything floating above the page.
+@mixin glass {
+  background-color: var(--glass);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+}

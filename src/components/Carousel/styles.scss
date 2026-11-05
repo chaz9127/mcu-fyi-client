@@ -1,33 +1,68 @@
-.react-horizontal-scrolling-menu--scroll-container {
-  overflow: hidden;
-}
-
-.react-horizontal-scrolling-menu--arrow-left {
-  font-size: 36px;
-  position: absolute;
-  z-index: 3;
-  background-color: rgba(0,0,0,0.3);
-  color: rgba(255,255,255,0.7);
-  height: calc(100% - 53px);
-}
-
-.react-horizontal-scrolling-menu--arrow-right {
-  font-size: 36px;
-  position: absolute;
-  z-index: 3;
-  background-color: rgba(0,0,0,0.3);
-  color: rgba(255,255,255,0.7);
-  height: calc(100% - 53px);
-  right: 0;
-}
-
 .react-horizontal-scrolling-menu--inner-wrapper {
   position: relative;
 }
 
+.react-horizontal-scrolling-menu--scroll-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-top: 8px; // room for the poster hover lift
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.react-horizontal-scrolling-menu--arrow-left,
+.react-horizontal-scrolling-menu--arrow-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.react-horizontal-scrolling-menu--arrow-left {
+  left: 0;
+}
+
+.react-horizontal-scrolling-menu--arrow-right {
+  right: 0;
+}
+
 .carousel-arrow {
+  position: absolute;
+  top: 38%;
   display: flex;
-  cursor: pointer;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  width: 42px;
+  height: 42px;
+  font-size: 15px;
+  color: var(--text);
+  background-color: rgba(20, 20, 20, 0.82);
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: background-color 0.2s, border-color 0.2s;
+
+  &:hover {
+    background-color: var(--red-button);
+    border-color: var(--red-button);
+  }
+}
+
+.react-horizontal-scrolling-menu--arrow-left .carousel-arrow {
+  left: 8px;
+}
+
+.react-horizontal-scrolling-menu--arrow-right .carousel-arrow {
+  right: 8px;
+}
+
+@media (hover: none) {
+  .carousel-arrow {
+    display: none; // touch devices swipe instead
+  }
 }

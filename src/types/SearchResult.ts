@@ -3,4 +3,6 @@ export type SearchResult = {
   name: string,
   slug: string,
   season?: number,
+  poster?: string,
+  type?: string,
 }

@@ -1,6 +1,7 @@
 import './Featured.component.scss';
 import '../../types/Featured';
 import { Button } from '../Button/Button.component';
+import { TrailerButton } from '../TrailerButton/TrailerButton.component';
 
 const featuredData = {
   "featured": {
@@ -15,35 +16,36 @@ const featuredData = {
   }
 }
 
-const tertiaryText = featuredData.featured.ticketsUrl ? 'Buy Tickets' :  'Watch Trailer'
-const tertiaryLink = featuredData.featured.ticketsUrl ?? featuredData.featured.watchUrl
-const tertiaryLogo = featuredData.featured.ticketsLogo ?? `${import.meta.env.VITE_CLIENT_URL}${featuredData.featured.watchIconUrl}`
+const actionText = featuredData.featured.ticketsUrl ? 'Buy Tickets' :  'Watch Trailer'
+const actionLink = featuredData.featured.ticketsUrl ?? featuredData.featured.watchUrl
+const actionLogo = featuredData.featured.ticketsLogo ?? `${import.meta.env.VITE_CLIENT_URL}${featuredData.featured.watchIconUrl}`
 
 export const Featured = () => {
   return (                 
-    <div className="featured-container">
-      <div className="featured-tile">
-        <div className="featured-buttons">
-          <div className="tile-logo">
-            <img alt={featuredData.featured.showTitle} src={`${import.meta.env.VITE_CLIENT_URL}${featuredData.featured.logoImageUrl}`} />
-          </div>
-          <div className="tile-button-container">
-            <Button
-              url={`${import.meta.env.VITE_CLIENT_URL}/media/${featuredData.featured.slug}`}
-              text="Get Info"
-              iconClass="fa-solid fa-info"
-              tertiary
-            />  
-            <Button
-              url={tertiaryLink}
-              text={tertiaryText}
-              imgUrl={tertiaryLogo}
-              tertiary
-            />
-          </div>
+    <section className="featured-container">
+      <div className="featured-art" aria-hidden="true"></div>
+      <div className="featured-content">
+        <span className="eyebrow">Featured</span>
+        <h1 className="featured-title">
+          <img className="featured-logo" alt={featuredData.featured.showTitle} src={`${import.meta.env.VITE_CLIENT_URL}${featuredData.featured.logoImageUrl}`} />
+        </h1>
+        <div className="featured-actions">
+          {/* A tickets link isn't YouTube, so it behaves as a normal button. */}
+          <TrailerButton
+            url={actionLink}
+            title={featuredData.featured.showTitle}
+            text={actionText}
+            imgUrl={actionLogo}
+          />
+          <Button
+            url={`${import.meta.env.VITE_CLIENT_URL}/media/${featuredData.featured.slug}`}
+            text="Get Info"
+            iconClass="fa-solid fa-circle-info"
+            secondary
+          />
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 

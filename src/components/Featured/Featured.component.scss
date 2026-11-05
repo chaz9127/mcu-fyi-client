@@ -1,66 +1,87 @@
 @import '../../styles/breakpoints.scss';
 
 .featured-container {
-  box-sizing: border-box;
-  width: 100%;
-  height: auto;
-  padding: 0 32px 0 128px;
-  background-image: url("/images/show-thumbnails/braveNewWorldThumbnail.png");
-  background-repeat: no-repeat;
-  aspect-ratio: 3/1;
   position: relative;
-  box-shadow: 1px 1px 20px;
-  z-index: 1;
-  background-color: #578698;
-  background-size: 50%;
-  background-position: right;
-
-  .featured-tile {
-    position: absolute;
-    top: 8vw;
-    max-width: 440px;
-    width: 100%;
-  }
-}
-
-.tile-logo {
-  img {
-    width: 100%;
-    max-width: 540px;
-    margin-bottom: 40px;
-    width: 40vw;
-  }
-}
-
-.tile-button-container {
   display: flex;
-}
+  align-items: flex-end;
+  min-height: clamp(460px, 68vh, 720px);
+  // Pull up under the translucent nav so the art runs to the top of the window.
+  margin-top: calc(var(--nav-height) * -1);
+  padding: calc(var(--nav-height) + 48px) var(--gutter) clamp(48px, 7vw, 88px);
+  overflow: hidden;
+  background:
+    radial-gradient(70% 90% at 12% 25%, rgba(87, 134, 152, 0.38), transparent 70%),
+    var(--bg);
 
-.featured-buttons {
-  max-width: 540px;
+  .featured-art {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(68%, 1180px);
+    background-image: url("/images/show-thumbnails/braveNewWorldThumbnail.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: right 28%;
+    filter: contrast(1.14) saturate(1.3);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 34%);
+    mask-image: linear-gradient(to right, transparent, #000 34%);
+  }
+
+  // Melts the bottom of the hero into the page.
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 40% 0 0;
+    background: linear-gradient(to bottom, transparent, var(--bg));
+    pointer-events: none;
+  }
+
+  .featured-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 22px;
+    width: 100%;
+    max-width: 560px;
+    animation: rise-in 0.7s var(--ease) both;
+  }
+
+  .featured-title {
+    width: 100%;
+    margin: 0;
+  }
+
+  .featured-logo {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    filter: drop-shadow(0 8px 28px rgba(0, 0, 0, 0.5));
+  }
+
+  .featured-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
 }
 
 @media (max-width: $maxTabletWidth) {
   .featured-container {
-    aspect-ratio: 3/1.2;
-  }
-  .tile-logo img {
-    margin-bottom: 16px;
-  }
-  .featured-buttons {
-    max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-  }
-}
+    min-height: 520px;
 
-@media (max-width: $maxMobileWidth) {
-  .featured-container {
-    padding: 16px;
+    .featured-art {
+      width: 100%;
+      background-position: 72% top;
+      -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 92%);
+      mask-image: linear-gradient(to bottom, #000 45%, transparent 92%);
+    }
 
-    .featured-tile {
-      width: 90%;
+    .featured-logo {
+      max-width: 340px;
     }
   }
 }

@@ -54,38 +54,35 @@ export const HasWatched = (props: HasWatchedProps) => {
     }
 
     if (hasUser) {
+        const label = hasWatched ? 'Remove from watched' : 'Add to watched';
+
         return (
-            <>
-                <div className="watched-banner" onClick={toggleWatch}>
-                    {hasWatched
-                        ? <i
-                            className="fa-solid fa-check"
-                            data-tooltip-id={`${slug}-watched-icon`} 
-                            data-tooltip-content="Remove from watched"
-                            data-tooltip-place="top"
-                        ></i>
-                        : <i
-                            className="fa-regular fa-eye-slash"    
-                            data-tooltip-id={`${slug}-watched-icon`} 
-                            data-tooltip-content="Add to watched"
-                            data-tooltip-place="top"
-                        ></i>
-                    }
-                </div>
-            </>
+            <button
+                type="button"
+                className={`watched-banner${hasWatched ? ' is-watched' : ''}`}
+                onClick={toggleWatch}
+                aria-label={`${label}: ${name}`}
+                aria-pressed={hasWatched}
+                data-tooltip-id={`${slug}-watched-icon`}
+                data-tooltip-content={label}
+                data-tooltip-place="top"
+            >
+                <i className={hasWatched ? 'fa-solid fa-check' : 'fa-regular fa-eye'}></i>
+            </button>
         )
     } else {
         return (
-            <>
-                <div className="watched-banner" onClick={goToAuthenticate}>
-                    <i
-                        className="fa-regular fa-eye-slash"
-                        data-tooltip-id={`${slug}-watched-icon`} 
-                        data-tooltip-content="Login or Register to Add"
-                        data-tooltip-place="top"
-                    ></i>
-                </div>
-            </>
+            <button
+                type="button"
+                className="watched-banner"
+                onClick={goToAuthenticate}
+                aria-label={`Login or register to add ${name} to your watched list`}
+                data-tooltip-id={`${slug}-watched-icon`}
+                data-tooltip-content="Login or Register to Add"
+                data-tooltip-place="top"
+            >
+                <i className="fa-regular fa-eye"></i>
+            </button>
         )
     }
 }

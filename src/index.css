@@ -1,8 +1,44 @@
 @font-face {
   font-family: 'Avengeance';
   src: local('Avengeance'), url(/fonts/avengers-webfont/AvengeanceHeroicAvengerBold-MM2J.woff) format('woff');
-  /* other formats include: 'woff2', 'truetype, 'opentype',
-                            'embedded-opentype', and 'svg' */
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+
+  /* Brand */
+  --red: #f0131e;
+  --red-button: #d9101a; /* passes AA with white text */
+  --red-button-hover: #ee1620;
+  --red-text: #ff5c64; /* passes AA as small text on the dark surfaces */
+  --red-glow: rgba(240, 19, 30, 0.35);
+  --steel: #578698;
+
+  /* Surfaces */
+  --bg: #131313;
+  --surface: #1a1a1a;
+  --surface-raised: #222222;
+  --surface-hover: #2c2c2c;
+  --glass: rgba(26, 26, 26, 0.72);
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.2);
+
+  /* Text */
+  --text: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.74);
+  --text-muted: rgba(255, 255, 255, 0.58);
+
+  /* Layout */
+  --gutter: clamp(16px, 4vw, 56px);
+  --page-width: 1600px;
+  --nav-height: 64px;
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 20px;
+
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --font: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
 }
 
 * {
@@ -11,15 +47,75 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(26, 26, 26);
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+
+/* Small label with the logo's skewed red slash in front of it */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 18px;
+  height: 12px;
+  background-color: var(--red);
+  transform: skew(-25deg);
+}
+
+.skeleton {
+  background: linear-gradient(100deg, var(--surface) 30%, var(--surface-hover) 50%, var(--surface) 70%);
+  background-size: 300% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+@keyframes shimmer {
+  from { background-position: 100% 0; }
+  to { background-position: -50% 0; }
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Toasts */
+.Toastify {
+  --toastify-color-dark: var(--surface-raised);
+  --toastify-color-progress-dark: var(--red);
+  --toastify-font-family: var(--font);
 }

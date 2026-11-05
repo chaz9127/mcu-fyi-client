@@ -15,23 +15,21 @@ export const MediaRow = (props: MediaRowProps) => {
   const { mediaList, title: title='' } = props;
   const displayMedia = () => {
     return (
-      <div className="media-container media-row-container">
-        <h2 className="media-title">{title}</h2>
-        <div className="media-results-container">
-          <ScrollMenu
-            LeftArrow={LeftArrow}
-            RightArrow={RightArrow}
-          >
-            {mediaList.map((media: MediaType, idx: number) => {
-              return (
-                <div key={idx} className="media-result">
-                  <Media media={media} key={idx} />
-                </div>
-                  
-              )
-            })}
-          </ScrollMenu>
-        </div>
+      <div className="media-row-container">
+        {title && <h2 className="media-row-title">{title}</h2>}
+        <ScrollMenu
+          LeftArrow={LeftArrow}
+          RightArrow={RightArrow}
+        >
+          {mediaList.map((media: MediaType, idx: number) => {
+            return (
+              <div key={idx} className="media-result">
+                <Media media={media} key={idx} />
+              </div>
+                
+            )
+          })}
+        </ScrollMenu>
       </div>
     )
   }

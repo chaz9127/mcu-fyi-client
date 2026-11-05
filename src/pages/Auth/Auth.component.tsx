@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import './Auth.component.scss'
+import '../../styles/forms.scss'
 import { Button } from '../../components/Button/Button.component';
 import { Nav } from '../../components/Nav/Nav.component';
 import type { AppDispatch } from '../../features/store';
@@ -107,7 +107,7 @@ export const Auth = () => {
         if (!errorMessage.length) return [];
         
         return (
-            <div className="error-container">
+            <div className="form-errors">
                 <ul>
                     {errorMessage.map((error, idx) => {
                         return <li key={idx}>{error}</li>
@@ -134,33 +134,35 @@ export const Auth = () => {
     return (
         <>
             <Nav />
-            <div className="auth-page-container">
-                <form onSubmit={(e) => {submitForm(e);}} className="auth-form">
+            <main className="form-page">
+                <form onSubmit={(e) => {submitForm(e);}} className="form-card">
+                    <Tabs label="Register or login" tabs={getTabs()}/>
+                    <h1 className="form-title">{isRegisterState() ? 'Create your account' : 'Welcome back'}</h1>
+                    <p className="form-intro">Keep track of everything you've watched across the MCU.</p>
                     {displayErrors()}
-                    <Tabs tabs={getTabs()}/>
-                    <div className="auth-form-input-container">
-                        <label htmlFor="auth-message" className="auth-form-label">Email</label>
-                        <input required ref={emailRef} name="email" className="auth-form-input" type="email" onChange={(e) => {setEmail(e.target.value)}}/>
+                    <div className="form-field">
+                        <label htmlFor="auth-email" className="form-label">Email</label>
+                        <input required ref={emailRef} id="auth-email" name="email" className="form-input" type="email" onChange={(e) => {setEmail(e.target.value)}}/>
                     </div>
-                    <div className="auth-form-input-container">
-                        <label htmlFor="auth-password" className="auth-form-label">Password {isRegisterState() && "(at least 8 characters)"}</label>
-                        <input required ref={passwordRef} name="password" minLength={8} className="auth-form-input" type="password"  onChange={(e) => {setPassword(e.target.value)}}/>
+                    <div className="form-field">
+                        <label htmlFor="auth-password" className="form-label">Password {isRegisterState() && <span className="form-hint">(at least 8 characters)</span>}</label>
+                        <input required ref={passwordRef} id="auth-password" name="password" minLength={8} className="form-input" type="password"  onChange={(e) => {setPassword(e.target.value)}}/>
                     </div>
-                   {isRegisterState() && <div className="auth-form-input-container">
-                        <label htmlFor="auth-confirm-password" className="auth-form-label">Confirm Password</label>
-                        <input required ref={confirmPasswordRef} name="confirm-password" className="auth-form-input" type="password" onChange={(e) => {setConfirmPassword(e.target.value)}} />
+                   {isRegisterState() && <div className="form-field">
+                        <label htmlFor="auth-confirm-password" className="form-label">Confirm Password</label>
+                        <input required ref={confirmPasswordRef} id="auth-confirm-password" name="confirm-password" className="form-input" type="password" onChange={(e) => {setConfirmPassword(e.target.value)}} />
                     </div>}
-                    <div className="auth-form-input-container">
+                    <div className="form-actions">
                         <Button
                             buttonType="submit"
-                            text={loading ? 'Submitting...' : "Submit"}
+                            text={loading ? 'Submitting...' : (isRegisterState() ? 'Create account' : 'Login')}
                             textOnly={true}
                             disabled={!isFormValid() || loading}
                         />
                     </div>
                     <input type="hidden" name="_captcha" value="false" />
                 </form>
-            </div>
+            </main>
         </>
     )
 }
