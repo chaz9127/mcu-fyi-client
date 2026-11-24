@@ -4,13 +4,14 @@
   position: relative;
   display: flex;
   align-items: flex-end;
+  max-width: var(--page-width);
   min-height: clamp(460px, 68vh, 720px);
   // Pull up under the translucent nav so the art runs to the top of the window.
-  margin-top: calc(var(--nav-height) * -1);
+  margin: calc(var(--nav-height) * -1) auto 0;
   padding: calc(var(--nav-height) + 48px) var(--gutter) clamp(48px, 7vw, 88px);
   overflow: hidden;
   background:
-    radial-gradient(70% 90% at 12% 25%, rgba(87, 134, 152, 0.38), transparent 70%),
+    radial-gradient(70% 90% at 12% 25%, rgba(0, 0, 0, 0.38), transparent 70%),
     var(--bg);
 
   .featured-art {
@@ -19,7 +20,7 @@
     right: 0;
     bottom: 0;
     width: min(68%, 1180px);
-    background-image: url("/images/show-thumbnails/braveNewWorldThumbnail.png");
+    background-image: url("/images/show-thumbnails/doomsday.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: right 28%;
@@ -66,6 +67,18 @@
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
+  }
+}
+
+// Wider than --page-width: no longer touches the window, so soften the sides.
+@media (min-width: 1601px) {
+  .featured-container {
+    background: var(--bg);
+
+    .featured-art {
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 34%, #000 90%, transparent);
+      mask-image: linear-gradient(to right, transparent, #000 34%, #000 90%, transparent);
+    }
   }
 }
 

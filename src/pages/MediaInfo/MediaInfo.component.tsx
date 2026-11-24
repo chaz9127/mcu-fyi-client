@@ -3,6 +3,7 @@ import {
   useParams,
 } from "react-router-dom";
 import { callApi } from '../../utils/api';
+import { getPlayLinkLogo } from '../../utils/getPlayLinkLogo';
 import { useLayoutEffect, useState } from 'react';
 import { Media } from '../../types';
 import { MediaRow } from '../../components/MediaRow/MediaRow.component';
@@ -51,19 +52,20 @@ export const MediaInfo = () => {
   const displayMediaInfoButtons = () => {
     if (!media?.playLink && !media?.trailerLink) return null;
 
+    const playLinkLogo = media.playLink && getPlayLinkLogo(media.playLink);
+
     return (
       <div className="media-info-button-container">
         {media?.playLink && 
           <Button 
             url={media.playLink}
             text="Watch Now"
-            imgUrl={`${import.meta.env.VITE_CLIENT_URL}/images/logos/DisneyPlus.png`}
+            imgUrl={playLinkLogo ? `${import.meta.env.VITE_CLIENT_URL}${playLinkLogo}` : undefined}
           />
         }
         {media?.trailerLink && 
           <TrailerButton
             url={media.trailerLink}
-            title={getName()}
             iconClass="fa-solid fa-play"
             secondary
           />

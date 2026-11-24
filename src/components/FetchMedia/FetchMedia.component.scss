@@ -1,18 +1,18 @@
 @import '../../styles/breakpoints.scss';
 
-.fetch-movie {
+.fetch-media {
   padding: clamp(20px, 4vw, 32px);
   background-color: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
 }
 
-.fetch-movie-heading {
+.fetch-media-heading {
   margin: 0 0 8px;
   font-size: 22px;
 }
 
-.fetch-movie-form {
+.fetch-media-form {
   display: flex;
   gap: 12px;
   margin-bottom: 20px;
@@ -22,7 +22,12 @@
   }
 }
 
-.fetch-movie-options {
+.fetch-media-type {
+  flex-shrink: 0;
+  width: 130px;
+}
+
+.fetch-media-options {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -44,7 +49,7 @@
   }
 }
 
-.fetch-movie-warnings {
+.fetch-media-warnings {
   margin-bottom: 20px;
   font-size: 14px;
   line-height: 1.5;
@@ -112,7 +117,11 @@
 }
 
 @media (max-width: $maxMobileWidth) {
-  .fetch-movie-form {
+  .fetch-media-form {
     flex-direction: column;
+  }
+
+  .fetch-media-type {
+    width: 100%;
   }
 }

@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { Nav } from '../../components/Nav/Nav.component';
-import { FetchMovie } from '../../components/FetchMovie/FetchMovie.component';
+import { FetchMedia } from '../../components/FetchMedia/FetchMedia.component';
 import { selectCurrentUser, selectIsAdmin } from '../../features/authSlice';
 import './Admin.scss';
 
@@ -22,7 +22,7 @@ export const Admin = () => {
                     <>
                         <span className="eyebrow">Admin</span>
                         <h1 className="admin-title">Tools</h1>
-                        <FetchMovie />
+                        <FetchMedia />
                     </>
                 ) : (
                     <p role="status">Checking access...</p>

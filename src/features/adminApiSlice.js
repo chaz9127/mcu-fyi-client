@@ -2,9 +2,9 @@ import { apiSlice } from "../api/apiSlice";
 
 export const adminApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
-        fetchMovie: builder.mutation({
-            query: title => ({
-                url: '/admin/fetch-movie',
+        fetchMedia: builder.mutation({
+            query: ({ type, title }) => ({
+                url: `/admin/fetch-${type}`,
                 method: 'POST',
                 body: { title }
             })
@@ -20,6 +20,6 @@ export const adminApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-    useFetchMovieMutation,
+    useFetchMediaMutation,
     useInsertMediaMutation,
 } = adminApiSlice;

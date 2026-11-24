@@ -2,6 +2,7 @@ import './Button.component.scss';
 type ButtonProps = {
   text: string,
   url?: string,
+  newTab?: boolean,
   callback?: (e: React.MouseEvent) => void,
   textOnly?: boolean,
   buttonType?: "button" | "submit" | "reset" | undefined,
@@ -13,9 +14,13 @@ type ButtonProps = {
   loading?: boolean,
 }
 export const Button = (props: ButtonProps) => {
-  const {url, callback, text, iconClass, imgUrl, secondary, tertiary, textOnly, buttonType, disabled, loading} = props;
+  const {url, newTab, callback, text, iconClass, imgUrl, secondary, tertiary, textOnly, buttonType, disabled, loading} = props;
 
   const goTo = (goToUrl: string) => {
+    if (newTab) {
+      window.open(goToUrl, '_blank', 'noopener,noreferrer');
+      return;
+    }
     window.location.href = goToUrl; //should eventually replace with react-router-dom
   };
 

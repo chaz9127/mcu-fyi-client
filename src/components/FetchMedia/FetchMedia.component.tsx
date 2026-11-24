@@ -2,11 +2,24 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../styles/forms.scss';
-import './FetchMovie.component.scss';
+import './FetchMedia.component.scss';
 import { Button } from '../Button/Button.component';
-import { useFetchMovieMutation, useInsertMediaMutation } from '../../features/adminApiSlice';
+import { useFetchMediaMutation, useInsertMediaMutation } from '../../features/adminApiSlice';
 
-type MovieOption = {
+const MEDIA_TYPES = {
+    movie: {
+        label: 'Movie',
+        hint: 'Search by title to generate a media object. Add a year to narrow it down, like Thor (2011).',
+    },
+    series: {
+        label: 'Series',
+        hint: 'Search by title to generate a media object for one season. Add a season to go straight to it, like Loki season 2.',
+    },
+}
+
+type MediaType = keyof typeof MEDIA_TYPES;
+
+type MediaOption = {
     id: string,
     label: string,
 }
@@ -15,7 +28,7 @@ type AdminError = {
     status?: number | string,
     data?: {
         message?: string,
-        options?: MovieOption[],
+        options?: MediaOption[],
     },
 }
 
@@ -24,23 +37,33 @@ const getErrorMessage = ({ status, data }: AdminError) => {
     return data?.message || 'No Server Response';
 }
 
-export const FetchMovie = () => {
+export const FetchMedia = () => {
+    const [type, setType] = useState<MediaType>('movie');
     const [title, setTitle] = useState('');
     const [code, setCode] = useState<string | null>(null);
     const [warnings, setWarnings] = useState<string[]>([]);
     const [errorMessage, setErrorMessage] = useState('');
-    const [options, setOptions] = useState<MovieOption[]>([]);
-    const [fetchMovie, { isLoading }] = useFetchMovieMutation();
+    const [options, setOptions] = useState<MediaOption[]>([]);
+    const [fetchMedia, { isLoading }] = useFetchMediaMutation();
     const [insertMedia, { isLoading: isInserting }] = useInsertMediaMutation();
 
-    const search = async (query: string) => {
+    const clearResults = () => {
         setCode(null);
         setWarnings([]);
         setErrorMessage('');
         setOptions([]);
+    }
+
+    const changeType = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setType(e.target.value as MediaType);
+        clearResults();
+    }
+
+    const search = async (query: string) => {
+        clearResults();
 
         try {
-            const result = await fetchMovie(query).unwrap();
+            const result = await fetchMedia({ type, title: query }).unwrap();
             setCode(result.output);
             setWarnings(result.warnings);
         } catch (err) {
@@ -59,8 +82,8 @@ export const FetchMovie = () => {
         setErrorMessage('');
 
         try {
-            const { name, chronologicalOrder, shifted } = await insertMedia(code).unwrap();
-            toast(`Inserted ${name} at ${chronologicalOrder}. Moved ${shifted} other media up by 1.`);
+            const { name, season, chronologicalOrder, shifted } = await insertMedia(code).unwrap();
+            toast(`Inserted ${name}${season ? ` Season ${season}` : ''} at ${chronologicalOrder}. Moved ${shifted} other media up by 1.`);
         } catch (err) {
             setErrorMessage(getErrorMessage(err as AdminError));
         }
@@ -76,15 +99,26 @@ export const FetchMovie = () => {
     }
 
     return (
-        <section className="fetch-movie" aria-labelledby="fetch-movie-heading">
-            <h2 id="fetch-movie-heading" className="fetch-movie-heading">Fetch movie</h2>
-            <p className="form-intro">Search by title to generate a media object. Add a year to narrow it down, like Thor (2011).</p>
-            <form className="fetch-movie-form" onSubmit={submitForm}>
+        <section className="fetch-media" aria-labelledby="fetch-media-heading">
+            <h2 id="fetch-media-heading" className="fetch-media-heading">Fetch media</h2>
+            <p className="form-intro">{MEDIA_TYPES[type].hint}</p>
+            <form className="fetch-media-form" onSubmit={submitForm}>
+                <select
+                    className="form-input fetch-media-type"
+                    aria-label="Media type"
+                    value={type}
+                    disabled={isLoading || isInserting}
+                    onChange={changeType}
+                >
+                    {Object.entries(MEDIA_TYPES).map(([value, { label }]) => (
+                        <option key={value} value={value}>{label}</option>
+                    ))}
+                </select>
                 <input
                     className="form-input"
                     type="text"
-                    aria-label="Movie title"
-                    placeholder="Movie title"
+                    aria-label="Title"
+                    placeholder={`${MEDIA_TYPES[type].label} title`}
                     maxLength={200}
                     value={title}
                     onChange={(e) => {setTitle(e.target.value)}}
@@ -100,7 +134,7 @@ export const FetchMovie = () => {
             {errorMessage && <div className="form-errors" role="alert">{errorMessage}</div>}
 
             {options.length > 0 && (
-                <ul className="fetch-movie-options" aria-label="Matching movies">
+                <ul className="fetch-media-options" aria-label="Matches">
                     {options.map(({ id, label }) => (
                         <li key={id}>
                             <button type="button" disabled={isLoading} onClick={() => {search(id)}}>{label}</button>
@@ -110,7 +144,7 @@ export const FetchMovie = () => {
             )}
 
             {warnings.length > 0 && (
-                <ul className="fetch-movie-warnings" role="status">
+                <ul className="fetch-media-warnings" role="status">
                     {warnings.map((warning) => <li key={warning}>{warning}</li>)}
                 </ul>
             )}

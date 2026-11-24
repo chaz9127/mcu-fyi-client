@@ -5,12 +5,12 @@ import { TrailerButton } from '../TrailerButton/TrailerButton.component';
 
 const featuredData = {
   "featured": {
-    "logoImageUrl": "/images/logos/braveNewWorld.webp",
-    "showTitle": "Captain America: Brave New World",
-    "slug": "captain-america-brave-new-world",
+    "logoImageUrl": "/images/logos/doomsday.png",
+    "showTitle": "Avengers: Doomsday",
+    "slug": "avengers-doomsday",
     "watchUrl": "https://www.youtube.com/watch?v=1pHDWnXmK7Y&ab_channel=MarvelEntertainment",
     "watchIconUrl": "/images/logos/youtube.png",
-    "ticketsUrl": "https://www.fandango.com/captain-america-brave-new-world-2025-237015/movie-overview",
+    "ticketsUrl": "https://www.fandango.com/avengers-doomsday-2026-237176/movie-overview",
     "ticketsLogo": "/images/logos/fandango.webp",
 
   }
@@ -30,10 +30,8 @@ export const Featured = () => {
           <img className="featured-logo" alt={featuredData.featured.showTitle} src={`${import.meta.env.VITE_CLIENT_URL}${featuredData.featured.logoImageUrl}`} />
         </h1>
         <div className="featured-actions">
-          {/* A tickets link isn't YouTube, so it behaves as a normal button. */}
           <TrailerButton
             url={actionLink}
-            title={featuredData.featured.showTitle}
             text={actionText}
             imgUrl={actionLogo}
           />
