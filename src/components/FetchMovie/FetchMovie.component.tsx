@@ -4,19 +4,24 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../../styles/forms.scss';
 import './FetchMovie.component.scss';
 import { Button } from '../Button/Button.component';
-import { useFetchMovieMutation } from '../../features/adminApiSlice';
+import { useFetchMovieMutation, useInsertMediaMutation } from '../../features/adminApiSlice';
 
 type MovieOption = {
     id: string,
     label: string,
 }
 
-type FetchMovieError = {
+type AdminError = {
     status?: number | string,
     data?: {
         message?: string,
         options?: MovieOption[],
     },
+}
+
+const getErrorMessage = ({ status, data }: AdminError) => {
+    if (status === 401 || status === 403) return 'You are not authorized. Try logging in again.';
+    return data?.message || 'No Server Response';
 }
 
 export const FetchMovie = () => {
@@ -26,6 +31,7 @@ export const FetchMovie = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [options, setOptions] = useState<MovieOption[]>([]);
     const [fetchMovie, { isLoading }] = useFetchMovieMutation();
+    const [insertMedia, { isLoading: isInserting }] = useInsertMediaMutation();
 
     const search = async (query: string) => {
         setCode(null);
@@ -38,19 +44,26 @@ export const FetchMovie = () => {
             setCode(result.output);
             setWarnings(result.warnings);
         } catch (err) {
-            const { status, data } = err as FetchMovieError;
-            if (status === 401 || status === 403) {
-                setErrorMessage('You are not authorized. Try logging in again.');
-            } else {
-                setErrorMessage(data?.message || 'No Server Response');
-                setOptions(data?.options || []);
-            }
+            setErrorMessage(getErrorMessage(err as AdminError));
+            setOptions((err as AdminError).data?.options || []);
         }
     }
 
     const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (title.trim() && !isLoading) search(title.trim());
+        if (title.trim() && !isLoading && !isInserting) search(title.trim());
+    }
+
+    const insertCode = async () => {
+        if (!window.confirm('Insert this media? If its chronologicalOrder is taken, that media and everything after it will move up by 1.')) return;
+        setErrorMessage('');
+
+        try {
+            const { name, chronologicalOrder, shifted } = await insertMedia(code).unwrap();
+            toast(`Inserted ${name} at ${chronologicalOrder}. Moved ${shifted} other media up by 1.`);
+        } catch (err) {
+            setErrorMessage(getErrorMessage(err as AdminError));
+        }
     }
 
     const copyCode = async () => {
@@ -80,7 +93,7 @@ export const FetchMovie = () => {
                     buttonType="submit"
                     text={isLoading ? 'Searching...' : 'Search'}
                     loading={isLoading}
-                    disabled={!title.trim()}
+                    disabled={!title.trim() || isInserting}
                 />
             </form>
 
@@ -113,12 +126,22 @@ export const FetchMovie = () => {
                     <textarea
                         aria-label="Media object"
                         spellCheck={false}
+                        readOnly={isInserting}
                         autoCapitalize="off"
                         autoCorrect="off"
                         rows={code.split('\n').length + 2}
                         value={code}
                         onChange={(e) => {setCode(e.target.value)}}
                     />
+                    <div className="code-block-footer">
+                        <Button
+                            buttonType="button"
+                            text={isInserting ? 'Inserting...' : 'Insert Media'}
+                            callback={insertCode}
+                            loading={isInserting}
+                            disabled={!code.trim()}
+                        />
+                    </div>
                 </div>
             )}
         </section>

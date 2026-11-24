@@ -89,6 +89,13 @@
   border-bottom: 1px solid var(--line);
 }
 
+.code-block-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px;
+  border-top: 1px solid var(--line);
+}
+
 .code-block-copy {
   padding: 8px 12px;
   font: inherit;

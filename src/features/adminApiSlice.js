@@ -9,9 +9,17 @@ export const adminApiSlice = apiSlice.injectEndpoints({
                 body: { title }
             })
         }),
+        insertMedia: builder.mutation({
+            query: source => ({
+                url: '/admin/media',
+                method: 'POST',
+                body: { source }
+            })
+        }),
     })
 });
 
 export const {
     useFetchMovieMutation,
+    useInsertMediaMutation,
 } = adminApiSlice;
