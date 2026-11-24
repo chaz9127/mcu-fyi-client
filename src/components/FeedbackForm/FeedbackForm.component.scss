@@ -1,0 +1,41 @@
+// The form sits in the Nav dropdown, so it is compact and not a full page.
+.feedback-form {
+  .feedback-form-intro {
+    margin: 0 0 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+  }
+
+  .form-field {
+    margin-bottom: 14px;
+  }
+
+  .form-input {
+    height: 42px;
+    font-size: 15px;
+  }
+
+  textarea.form-input {
+    height: 110px;
+  }
+
+  .form-errors {
+    font-size: 13px;
+  }
+
+  .form-actions {
+    margin-top: 16px;
+
+    .button {
+      display: flex;
+      width: 100%;
+    }
+  }
+
+  .feedback-form-sent {
+    margin: 0 0 12px;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+}

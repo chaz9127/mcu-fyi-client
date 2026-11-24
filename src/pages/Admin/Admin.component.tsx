@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { Nav } from '../../components/Nav/Nav.component';
 import { FetchMedia } from '../../components/FetchMedia/FetchMedia.component';
 import { selectCurrentUser, selectIsAdmin } from '../../features/authSlice';
@@ -22,6 +22,7 @@ export const Admin = () => {
                     <>
                         <span className="eyebrow">Admin</span>
                         <h1 className="admin-title">Tools</h1>
+                        <Link to="/admin/feedback" className="button secondary-button admin-feedback-link">View feedback</Link>
                         <FetchMedia />
                     </>
                 ) : (

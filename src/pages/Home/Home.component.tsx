@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from "react-redux";
-import { useSearchParams, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Featured } from '../../components/Featured/Featured.component';
@@ -32,18 +32,10 @@ export const Home = () => {
   const [sortByValue, setSortByValue] = useState<string>('releaseDate');
   const [filterByValue, setFilterByValue] = useState<string>('all');
   const [loading, setLoading] = useState<boolean>(true);
-  const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
-  useEffect(() => {
-    if (searchParams.get('submittedFeedback')) {
-      toast('Thanks for the feedback!');
-      setSearchParams({submittedFeedback: ''})
-    }
-  }, [searchParams, setSearchParams]);
   useEffect(() => {
     if (location?.state?.successfulLogin) {
       location.state = {};
-      toast('Welcome back!');
     } else if (location?.state?.successfulRegister) {
       location.state = {};
       toast('Welcome!');

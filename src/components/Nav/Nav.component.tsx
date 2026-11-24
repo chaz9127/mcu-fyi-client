@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { FeedbackForm } from '../FeedbackForm/FeedbackForm.component';
 import { useSelector, useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../features/store';
 import { INITIAL_NAVIGATION_STATE } from '../../constants/state';
@@ -15,6 +16,8 @@ import { useLoginWithTokenMutation } from '../../features/authApiSlice';
 export const Nav = () => {
   const [ showNavMenu, setShowNavMenu ] = useState(false);
   const [ searchPool, setSearchPool ] = useState<Media[]>([]);
+  const [ showFeedback, setShowFeedback ] = useState(false);
+  const feedbackRef = useRef<HTMLDivElement>(null);
   const { state } = useLocation();
   const navigate = useNavigate();
   const currentUser = useSelector(selectCurrentUser);
@@ -28,6 +31,18 @@ export const Nav = () => {
   const hideShowNavMenu = (ele:Event) => {
     const clickedToggle = !!(ele?.target as HTMLElement).closest?.('.nav-toggle');
     !clickedToggle && setShowNavMenu(false);
+  };
+
+  const toggleFeedback = () => {
+    setShowNavMenu(false);
+    setShowFeedback(!showFeedback);
+  };
+
+  // The feedback toggle handles its own clicks, so it is ignored here.
+  const hideFeedbackOnOutsideClick = (ele: Event) => {
+    const target = ele.target as HTMLElement;
+    if (target.closest?.('.feedback-toggle')) return;
+    if (feedbackRef.current && !feedbackRef.current.contains(target)) setShowFeedback(false);
   };
 
   useEffect(() => {
@@ -64,9 +79,13 @@ export const Nav = () => {
   useEffect(() => {
     const html = document.getElementsByTagName('html')[0];
     html.addEventListener('click', hideShowNavMenu, false);
+    html.addEventListener('click', hideFeedbackOnOutsideClick, false);
 
-    return () => html.removeEventListener('click', hideShowNavMenu, false);
-  }, [])  
+    return () => {
+      html.removeEventListener('click', hideShowNavMenu, false);
+      html.removeEventListener('click', hideFeedbackOnOutsideClick, false);
+    };
+  }, [])
 
   useEffect(() => {
     const getMedia = async () => {
@@ -116,10 +135,15 @@ export const Nav = () => {
         </li>
       )}
       <li className="nav-menu-item">
-        <Link to="/feedback">
+        <button
+          type="button"
+          className="feedback-toggle"
+          aria-expanded={showFeedback}
+          onClick={toggleFeedback}
+        >
           <i className="fa-solid fa-comment-dots nav-menu-icon"></i>
           Feedback
-        </Link>
+        </button>
       </li>
       <li
         className="nav-menu-item"
@@ -172,6 +196,11 @@ export const Nav = () => {
             />
           </div>
         </div>
+        {showFeedback && (
+          <div className="feedback-dropdown" ref={feedbackRef}>
+            <FeedbackForm />
+          </div>
+        )}
       </nav>
       <Tooltip id="donate-buttom-img" />
     </header>

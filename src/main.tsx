@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { Home } from './pages/Home/Home.component';
-import { Feedback } from './pages/Feedback/Feedback.component';
+import { AdminFeedback } from './pages/AdminFeedback/AdminFeedback.component';
 import { Auth } from './pages/Auth/Auth.component';
 import { Admin } from './pages/Admin/Admin.component';
 import {
@@ -30,11 +30,6 @@ const router = createBrowserRouter([
     // create error page
   },
   {
-    path: "/feedback",
-    element: <Feedback />,
-    // create error page
-  },
-  {
     path: "/auth",
     element: <Auth />,
     // create error page
@@ -42,6 +37,11 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: <Admin />,
+    // create error page
+  },
+  {
+    path: "/admin/feedback",
+    element: <AdminFeedback />,
     // create error page
   },
 ]);
