@@ -37,3 +37,4 @@ export default authSlice.reducer;
 
 export const selectCurrentToken = (state) => state.auth.token;
 export const selectCurrentUser = (state) => state.auth.currentUser;
+export const selectIsAdmin = (state) => state.auth.currentUser?.role === 'admin';

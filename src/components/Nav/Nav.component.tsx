@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../features/store';
 import { INITIAL_NAVIGATION_STATE } from '../../constants/state';
-import  { selectCurrentUser, logOut, setCredientals } from '../../features/authSlice';
+import  { selectCurrentUser, selectIsAdmin, logOut, setCredientals } from '../../features/authSlice';
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
 import { SearchBar } from '../SearchBar/SearchBar.component';
@@ -18,6 +18,7 @@ export const Nav = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const currentUser = useSelector(selectCurrentUser);
+  const isAdmin = useSelector(selectIsAdmin);
   const dispatch = useDispatch.withTypes<AppDispatch>()();
   const localAccessToken = localStorage.getItem('accessToken');
   const [loginWithToken] = useLoginWithTokenMutation();
@@ -106,6 +107,14 @@ export const Nav = () => {
 
   const getNavItems = (tooltipPlace: 'bottom' | 'left') => (
     <>
+      {isAdmin && (
+        <li className="nav-menu-item">
+          <Link to="/admin">
+            <i className="fa-solid fa-screwdriver-wrench nav-menu-icon"></i>
+            Admin
+          </Link>
+        </li>
+      )}
       <li className="nav-menu-item">
         <Link to="/feedback">
           <i className="fa-solid fa-comment-dots nav-menu-icon"></i>

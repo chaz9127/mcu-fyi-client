@@ -1,0 +1,13 @@
+@import '../../styles/mixins.scss';
+
+.admin-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px var(--gutter) 64px;
+}
+
+.admin-title {
+  margin: 18px 0 28px;
+  @include display;
+  font-size: clamp(36px, 6vw, 52px);
+}

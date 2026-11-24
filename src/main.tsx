@@ -4,6 +4,7 @@ import './index.css';
 import { Home } from './pages/Home/Home.component';
 import { Feedback } from './pages/Feedback/Feedback.component';
 import { Auth } from './pages/Auth/Auth.component';
+import { Admin } from './pages/Admin/Admin.component';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -35,6 +36,11 @@ const router = createBrowserRouter([
   {
     path: "/auth",
     element: <Auth />,
+    // create error page
+  },
+  {
+    path: "/admin",
+    element: <Admin />,
     // create error page
   },
 ]);
