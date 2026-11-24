@@ -1,0 +1,33 @@
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding: 24px var(--gutter);
+  border-top: 1px solid var(--line);
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.5;
+
+  p {
+    margin: 0;
+  }
+
+  .site-footer-tmdb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+
+  // TMDB asks that its logo be less prominent than the app's own branding.
+  .site-footer-tmdb-logo {
+    width: auto;
+    opacity: 0.7;
+  }
+
+  .site-footer-tmdb-notice {
+    max-width: 460px;
+  }
+}
