@@ -2,20 +2,10 @@ import "./Featured.component.scss";
 import "../../types/Featured";
 import { Button } from "../Button/Button.component";
 import { TrailerButton } from "../TrailerButton/TrailerButton.component";
-
-const featuredData = {
-  featured: {
-    logoImageUrl: "/images/logos/doomsday.png",
-    showTitle: "Avengers: Doomsday",
-    slug: "avengers-doomsday",
-    watchUrl: "https://www.youtube.com/watch?v=1pHDWnXmK7Y&ab_channel=MarvelEntertainment",
-    ticketsUrl: "https://www.fandango.com/avengers-doomsday-2026-237176/movie-overview",
-    ticketsLogo: "/images/logos/fandango.webp",
-  },
-};
+import { FEATURED } from "../../constants/featured";
 
 export const Featured = () => {
-  const { ticketsUrl, ticketsLogo, watchUrl, slug, logoImageUrl, showTitle } = featuredData.featured;
+  const { ticketsUrl, ticketsLogo, watchUrl, slug, logoImageUrl, showTitle } = FEATURED;
 
   return (
     <section className="featured-container">

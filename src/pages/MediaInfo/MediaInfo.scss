@@ -57,6 +57,15 @@
     box-shadow: 0 0 0 1px var(--line), 0 30px 70px rgba(0, 0, 0, 0.6);
   }
 
+  .media-info-tickets {
+    margin-top: 16px;
+
+    .button {
+      display: flex;
+      width: 100%;
+    }
+  }
+
   .watched-banner {
     top: 12px;
     right: 12px;

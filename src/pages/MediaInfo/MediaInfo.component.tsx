@@ -13,6 +13,7 @@ import { Nav } from '../../components/Nav/Nav.component';
 import { HasWatched } from '../../components/HasWatched/HasWatched.component';
 import { Tooltip } from 'react-tooltip';
 import { Poster } from '../../components/Poster/Poster.component';
+import { FEATURED } from '../../constants/featured';
 
 export const MediaInfo = () => {
   const { slug } = useParams();
@@ -91,6 +92,16 @@ export const MediaInfo = () => {
               ? <Poster className="media-info-image" src={media.poster} name={media.name} alt={`poster of ${getName()}`} width={640} />
               : <div className="media-info-image skeleton"></div>
             }
+            {media?.slug === FEATURED.slug && (
+              <div className="media-info-tickets">
+                <Button
+                  url={FEATURED.ticketsUrl}
+                  newTab
+                  text="Buy Tickets"
+                  imgUrl={`${import.meta.env.VITE_CLIENT_URL}${FEATURED.ticketsLogo}`}
+                />
+              </div>
+            )}
             {media && !hasFutureReleaseDate() && (
               <>
                 <HasWatched slug={media.slug} name={getName()}/>
